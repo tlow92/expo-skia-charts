@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn typecheck:*)",
+      "Bash(node:*)",
+      "Bash(test:*)",
+      "Bash(yarn install:*)",
+      "Bash(npx tsc:*)",
+      "WebFetch(domain:shopify.github.io)"
+    ]
+  }
+}

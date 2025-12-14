@@ -1,3 +1,1 @@
-export function multiply(a: number, b: number): number {
-  return a * b;
-}
+export { LineChart } from "./components/line/LineChart";

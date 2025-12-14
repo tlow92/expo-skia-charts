@@ -1,12 +1,10 @@
-import { Canvas, Rect } from "@shopify/react-native-skia";
+import { LineChart } from "expo-skia-charts";
 import { View } from "react-native";
 
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1 }}>
-      <Canvas style={{ flex: 1 }}>
-        <Rect x={0} y={0} width={100} height={100} color="red" />
-      </Canvas>
+      <LineChart data={[{ value: 1, date: new Date() }]} />
     </View>
   );
 }

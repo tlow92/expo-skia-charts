@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "expo-skia-charts": ["./src/index"]
+      "expo-skia-charts": ["./src"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,
@@ -26,7 +26,5 @@
     "strict": true,
     "target": "ESNext",
     "verbatimModuleSyntax": true
-  },
-  "include": ["src"],
-  "exclude": ["example", "lib", "node_modules"]
+  }
 }
