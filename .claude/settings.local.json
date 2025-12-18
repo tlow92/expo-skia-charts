@@ -6,7 +6,9 @@
       "Bash(test:*)",
       "Bash(yarn install:*)",
       "Bash(npx tsc:*)",
-      "WebFetch(domain:shopify.github.io)"
+      "WebFetch(domain:shopify.github.io)",
+      "mcp__ide__getDiagnostics",
+      "Bash(yarn test:*)"
     ]
   }
 }
