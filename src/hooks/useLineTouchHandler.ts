@@ -5,7 +5,8 @@ import type { SharedValue } from "react-native-reanimated";
 export const useLineTouchHandler = (
   x: SharedValue<number>,
   y: SharedValue<number>,
-  offset: number,
+  offsetX: number,
+  offsetY: number,
   enabled: boolean,
   removeOnEnd?: boolean
 ) => {
@@ -14,16 +15,16 @@ export const useLineTouchHandler = (
       .activeCursor("pointer")
       .enabled(enabled)
       .onStart((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
       })
       .onChange((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
       })
       .onEnd((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
         if (removeOnEnd) {
           x.value = Infinity;
           y.value = Infinity;
@@ -33,16 +34,16 @@ export const useLineTouchHandler = (
       .activateAfterLongPress(1)
       .enabled(enabled)
       .onStart((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
       })
       .onChange((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
       })
       .onEnd((pos) => {
-        x.value = pos.x - 1 - offset;
-        y.value = pos.y - 1 - offset;
+        x.value = pos.x - offsetX;
+        y.value = pos.y - offsetY;
 
         if (removeOnEnd) {
           x.value = Infinity;
@@ -51,5 +52,5 @@ export const useLineTouchHandler = (
       });
     const composed = Gesture.Race(hover, pan);
     return composed;
-  }, [enabled, x, y, offset, removeOnEnd]);
+  }, [enabled, x, y, offsetX, offsetY, removeOnEnd]);
 };

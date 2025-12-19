@@ -11,6 +11,8 @@ import {
 } from "../../providers/LineChartContextProvider";
 import { Line } from "./Line";
 import type { LineChartProps } from "./types";
+import { XAxis } from "./XAxis";
+import { YAxis } from "./YAxis";
 
 export function Chart({ config }: LineChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -22,23 +24,38 @@ export function Chart({ config }: LineChartProps) {
     setSize({ width, height });
   };
 
-  const gesture = useLineTouchHandler(x, y, 0, config.hover?.enabled ?? false, true);
+  // Calculate margins for axes
+  const MARGIN_LEFT = config.yAxis?.enabled ? 50 : 0;
+  const MARGIN_RIGHT = config.xAxis?.enabled ? 14 : 0; // X-axis labels are 100px wide, centered
+  const MARGIN_TOP = config.yAxis?.enabled ? 10 : 0; // Prevent Y-axis label clipping
+  const MARGIN_BOTTOM = config.xAxis?.enabled ? 30 : 0;
+  const chartWidth = size.width - MARGIN_LEFT - MARGIN_RIGHT;
+  const chartHeight = size.height - MARGIN_BOTTOM - MARGIN_TOP;
+
+  const gesture = useLineTouchHandler(
+    x,
+    y,
+    MARGIN_LEFT,
+    MARGIN_TOP,
+    config.hover?.enabled ?? false,
+    true
+  );
 
   const context = useMemo<LineChartContextType>(
     () => ({
-      size,
+      size: { width: chartWidth, height: chartHeight },
       x,
       y,
       config,
     }),
-    [size, x, y, config]
+    [chartWidth, chartHeight, x, y, config]
   );
 
   // Track selected data point and trigger onHover callback
   useSelectedDataPoint({
     x,
     data: config.data,
-    width: size.width,
+    width: chartWidth,
     onHover: config.hover?.onHover,
   });
 
@@ -46,10 +63,46 @@ export function Chart({ config }: LineChartProps) {
     <View onLayout={onLayout} style={{ flex: 1 }}>
       {size.width > 0 && size.height > 0 && (
         <GestureDetector gesture={gesture}>
-          <Canvas style={{ width: size.width, height: size.height, borderWidth: 2 }}>
+          <Canvas style={{ width: size.width, height: size.height }}>
             <LineChartContextProvider value={context}>
               <Group>
-                <Line />
+                {/* Y-Axis */}
+                {config.yAxis?.enabled && (
+                  <Group
+                    transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
+                  >
+                    <YAxis
+                      data={config.data}
+                      width={chartWidth}
+                      height={chartHeight}
+                      config={config.yAxis}
+                    />
+                  </Group>
+                )}
+
+                {/* X-Axis */}
+                {config.xAxis?.enabled && (
+                  <Group
+                    transform={[
+                      { translateX: MARGIN_LEFT },
+                      { translateY: chartHeight + MARGIN_TOP },
+                    ]}
+                  >
+                    <XAxis
+                      data={config.data}
+                      width={chartWidth}
+                      height={chartHeight}
+                      config={config.xAxis}
+                    />
+                  </Group>
+                )}
+
+                {/* Chart Line */}
+                <Group
+                  transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
+                >
+                  <Line />
+                </Group>
               </Group>
             </LineChartContextProvider>
           </Canvas>

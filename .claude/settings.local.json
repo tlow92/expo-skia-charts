@@ -8,7 +8,12 @@
       "Bash(npx tsc:*)",
       "WebFetch(domain:shopify.github.io)",
       "mcp__ide__getDiagnostics",
-      "Bash(yarn test:*)"
+      "Bash(yarn test:*)",
+      "Bash(git pull:*)",
+      "Bash(yarn add:*)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "context7"
+  ]
 }

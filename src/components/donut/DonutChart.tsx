@@ -1,5 +1,5 @@
 import type { LayoutChangeEvent } from "react-native";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import {
   Canvas,
   Paragraph,
@@ -50,7 +50,11 @@ export function DonutChart({
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const customFontMgr = useFonts({
-    Roboto: [require("../../assets/Roboto-Regular.ttf")],
+    Roboto: [
+      Platform.OS === "web"
+        ? { default: require("../../assets/Roboto-Regular.ttf") }
+        : require("../../assets/Roboto-Regular.ttf"),
+    ],
   });
   // Animation values
   const animationProgress = useSharedValue(0);

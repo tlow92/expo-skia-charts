@@ -16,11 +16,15 @@ export function useSelectedDataPoint({
   onHover,
 }: UseSelectedDataPointParams) {
   return useDerivedValue(() => {
+    "worklet";
     if (!data || data.length === 0) {
       return null;
     }
 
-    const canvasX = x.value;
+    // Clamp canvas x to stay within valid range
+    let canvasX = x.value;
+    if (canvasX < 0) canvasX = 0;
+    if (canvasX > width) canvasX = width;
 
     // Get min and max x from data
     const xValues = data.map((point) => point.x);
