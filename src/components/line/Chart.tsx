@@ -10,7 +10,9 @@ import {
   type LineChartContextType,
 } from "../../providers/LineChartContextProvider";
 import { Line } from "./Line";
-import type { LineChartProps } from "./types";
+import { MultiLine } from "./MultiLine";
+import { Tooltip } from "./Tooltip";
+import type { LineChartDataPoint, LineChartProps } from "./types";
 import { XAxis } from "./XAxis";
 import { YAxis } from "./YAxis";
 
@@ -18,6 +20,11 @@ export function Chart({ config }: LineChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const x = useSharedValue(0);
   const y = useSharedValue(0);
+  const selectedDataPoint = useSharedValue<LineChartDataPoint | null>(null);
+
+  // Detect multi-line mode
+  const isMultiLine = !!config.series;
+  const chartData = config.data ?? (config.series?.[0]?.data ?? []);
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -60,61 +67,84 @@ export function Chart({ config }: LineChartProps) {
   );
 
   // Track selected data point and trigger onHover callback
+  // For multi-line mode, we use the first series for now
+  // TODO: Update to support multiple series hover
   useSelectedDataPoint({
     x,
-    data: config.data,
+    data: chartData,
     width: chartWidth,
     onHover: config.hover?.onHover,
+    selectedPoint: selectedDataPoint,
   });
 
   return (
     <View onLayout={onLayout} style={{ flex: 1 }}>
       {size.width > 0 && size.height > 0 && (
-        <GestureDetector gesture={gesture}>
-          <Canvas style={{ width: size.width, height: size.height }}>
-            <LineChartContextProvider value={context}>
-              <Group>
-                {/* Y-Axis */}
-                {config.yAxis?.enabled && (
+        <>
+          <GestureDetector gesture={gesture}>
+            <Canvas style={{ width: size.width, height: size.height }}>
+              <LineChartContextProvider value={context}>
+                <Group>
+                  {/* Y-Axis */}
+                  {config.yAxis?.enabled && (
+                    <Group
+                      transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
+                    >
+                      <YAxis
+                        data={chartData}
+                        width={chartWidth}
+                        height={chartHeight}
+                        config={config.yAxis}
+                      />
+                    </Group>
+                  )}
+
+                  {/* X-Axis */}
+                  {config.xAxis?.enabled && (
+                    <Group
+                      transform={[
+                        { translateX: MARGIN_LEFT },
+                        { translateY: chartHeight + MARGIN_TOP },
+                      ]}
+                    >
+                      <XAxis
+                        data={chartData}
+                        width={chartWidth}
+                        height={chartHeight}
+                        config={config.xAxis}
+                      />
+                    </Group>
+                  )}
+
+                  {/* Chart Line(s) */}
                   <Group
                     transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
                   >
-                    <YAxis
-                      data={config.data}
-                      width={chartWidth}
-                      height={chartHeight}
-                      config={config.yAxis}
-                    />
+                    {isMultiLine && config.series ? (
+                      <MultiLine series={config.series} />
+                    ) : (
+                      <Line />
+                    )}
                   </Group>
-                )}
-
-                {/* X-Axis */}
-                {config.xAxis?.enabled && (
-                  <Group
-                    transform={[
-                      { translateX: MARGIN_LEFT },
-                      { translateY: chartHeight + MARGIN_TOP },
-                    ]}
-                  >
-                    <XAxis
-                      data={config.data}
-                      width={chartWidth}
-                      height={chartHeight}
-                      config={config.xAxis}
-                    />
-                  </Group>
-                )}
-
-                {/* Chart Line */}
-                <Group
-                  transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
-                >
-                  <Line />
                 </Group>
-              </Group>
-            </LineChartContextProvider>
-          </Canvas>
-        </GestureDetector>
+              </LineChartContextProvider>
+            </Canvas>
+          </GestureDetector>
+
+          {/* Tooltip */}
+          {config.hover?.tooltip && (
+            <Tooltip
+              x={x}
+              y={y}
+              dataPoint={selectedDataPoint}
+              config={config.hover.tooltip}
+              chartWidth={chartWidth}
+              chartHeight={chartHeight}
+              marginLeft={MARGIN_LEFT}
+              marginTop={MARGIN_TOP}
+            />
+          )}
+        </>
       )}
     </View>
   );

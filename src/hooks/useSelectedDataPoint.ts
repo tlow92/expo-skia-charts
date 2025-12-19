@@ -7,6 +7,7 @@ interface UseSelectedDataPointParams {
   data: LineChartDataPoint[];
   width: number;
   onHover?: (point: LineChartDataPoint) => void;
+  selectedPoint?: SharedValue<LineChartDataPoint | null>;
 }
 
 export function useSelectedDataPoint({
@@ -14,10 +15,19 @@ export function useSelectedDataPoint({
   data,
   width,
   onHover,
+  selectedPoint,
 }: UseSelectedDataPointParams) {
   return useDerivedValue(() => {
     "worklet";
     if (!data || data.length === 0) {
+      return null;
+    }
+
+    // If x is Infinity (gesture ended, cursor left canvas), hide tooltip
+    if (!Number.isFinite(x.value)) {
+      if (selectedPoint) {
+        selectedPoint.value = null;
+      }
       return null;
     }
 
@@ -46,11 +56,16 @@ export function useSelectedDataPoint({
       }
     }
 
+    // Store in SharedValue if provided
+    if (selectedPoint) {
+      selectedPoint.value = closestPoint ?? null;
+    }
+
     // Call onHover callback if defined
     if (closestPoint && onHover) {
       runOnJS(onHover)(closestPoint);
     }
 
     return closestPoint;
-  }, [data, width]);
+  }, [data, width, selectedPoint]);
 }

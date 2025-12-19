@@ -1,18 +1,38 @@
 import { Circle, Group, Path, rect } from "@shopify/react-native-skia";
 import { useMemo } from "react";
-import { useDerivedValue, useSharedValue } from "react-native-reanimated";
+import { useDerivedValue } from "react-native-reanimated";
 import { useLineChartContext } from "../../providers/LineChartContextProvider";
 import { getYForX } from "../../utils/math";
-import { PADDING, buildLine } from "./utils";
+import { PADDING, buildLine, buildLineWithDomain } from "./utils";
+import type { LineChartDataPoint, LineChartColors } from "./types";
 
-export function Line() {
+interface LineProps {
+  data?: LineChartDataPoint[];
+  colors?: LineChartColors;
+  strokeWidth?: number;
+  domain?: { minX: number; maxX: number; minY: number; maxY: number };
+}
+
+export function Line({ data: propData, colors: propColors, strokeWidth, domain }: LineProps) {
   const {
     size: { width, height },
     x,
-    config: { hover, colors, data },
+    config: { hover, colors: defaultColors, data: contextData },
   } = useLineChartContext();
 
-  const { path } = useMemo(() => buildLine(data, width, height), [data, width, height]);
+  // Use prop data if provided, otherwise fall back to context data
+  const data = propData ?? contextData;
+  const colors = propColors ?? defaultColors;
+
+  const { path } = useMemo(() => {
+    if (!data) return { path: null, minY: 0, maxY: 0 };
+    if (domain) {
+      return buildLineWithDomain(data, width, height, domain);
+    }
+    return buildLine(data, width, height);
+  }, [data, width, height, domain]);
+
+  if (!data || !path) return null;
 
   const DOT_SIZE = hover?.dotSize ?? 6;
 
@@ -29,6 +49,12 @@ export function Line() {
     return newy || -300;
   }, [path, clampedX]);
 
+  // Check if cursor is over canvas (not Infinity) - returns 1 or 0 for opacity
+  const isHovering = useDerivedValue(() => {
+    "worklet";
+    return Number.isFinite(x.value) ? 1 : 0;
+  }, [x]);
+
   const clipBeforeCursor = useDerivedValue(() => {
     // TODO: we probably need to fix this properly if we want to introduce reverse highlighting
     // if (colors?.lineBase)
@@ -42,6 +68,8 @@ export function Line() {
     return rect(-2, -PADDING, clampedX.value + DOT_SIZE * 0.5, height + PADDING);
   }, [clampedX, colors?.highlightColor, width, height]);
 
+  const lineStrokeWidth = strokeWidth ?? 2;
+
   return (
     <Group transform={[{ translateY: height - PADDING }, { scaleY: -1 }]}>
       {hover?.highlightLine && (
@@ -50,7 +78,7 @@ export function Line() {
             path={path}
             style="stroke"
             color={colors?.lineBase ?? "#666"}
-            strokeWidth={2}
+            strokeWidth={lineStrokeWidth}
             opacity={0.3}
           />
         </Group>
@@ -60,14 +88,20 @@ export function Line() {
         <Path
           path={path}
           style="stroke"
-          strokeWidth={2}
+          strokeWidth={lineStrokeWidth}
           strokeJoin="round"
           strokeCap="round"
           color={colors?.highlightColor ?? "#000"}
         />
       </Group>
       {hover?.showDot && (
-        <Circle cx={clampedX} cy={cy} r={DOT_SIZE} color={colors?.dotBase ?? "#000"} />
+        <Circle
+          cx={clampedX}
+          cy={cy}
+          r={DOT_SIZE}
+          color={colors?.dotBase ?? "#000"}
+          opacity={isHovering}
+        />
       )}
     </Group>
   );

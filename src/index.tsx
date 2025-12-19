@@ -9,4 +9,7 @@ export type {
   HoverConfig,
   LineChartColors,
   AxisConfig,
+  TooltipConfig,
+  LineSeriesData,
+  MultiLineHoverConfig,
 } from "./components/line/types";

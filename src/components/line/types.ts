@@ -66,6 +66,37 @@ export type AxisConfig = {
 };
 
 /**
+ * Configuration for tooltip rendering.
+ */
+export type TooltipConfig = {
+  /**
+   * Whether the tooltip is enabled.
+   * @default true
+   */
+  enabled?: boolean;
+  /**
+   * Whether to snap tooltip position to the nearest data point.
+   * If true (default), tooltip jumps between data points (stepped behavior).
+   * If false, tooltip follows cursor smoothly.
+   * @default true
+   */
+  snapToPoint?: boolean;
+  /**
+   * Function that renders the tooltip content.
+   * Receives the current data point and should return a React node.
+   * @param dataPoint - The data point at the current position
+   * @returns React node to render inside the tooltip
+   */
+  renderContent: (dataPoint: LineChartDataPoint) => React.ReactNode;
+  /**
+   * Offset of the tooltip from the data point position.
+   * Positive x moves right, positive y moves down.
+   * @default { x: 10, y: -10 }
+   */
+  offset?: { x: number; y: number };
+};
+
+/**
  * Configuration for hover/touch interactions with the chart.
  */
 export type HoverConfig = {
@@ -88,9 +119,14 @@ export type HoverConfig = {
   /**
    * Whether to show a tooltip on hover.
    * @default false
-   * @todo Not yet implemented
+   * @deprecated Use `tooltip` config instead
    */
   showTooltip?: boolean;
+  /**
+   * Tooltip configuration.
+   * If provided, displays a custom tooltip when hovering over the chart.
+   */
+  tooltip?: TooltipConfig;
   /**
    * Callback function triggered when hovering over a data point.
    * Useful for displaying custom tooltips or updating external state.
@@ -130,14 +166,77 @@ export type LineChartColors = {
 };
 
 /**
+ * Configuration for a single line series in a multi-line chart.
+ */
+export type LineSeriesData = {
+  /**
+   * Unique identifier for this line series.
+   * Used to distinguish between multiple lines.
+   */
+  id: string;
+  /**
+   * Array of data points for this line.
+   * Must contain at least one point.
+   */
+  data: LineChartDataPoint[];
+  /**
+   * Optional label for this series.
+   * Can be used in tooltips or legends.
+   */
+  label?: string;
+  /**
+   * Color configuration specific to this line.
+   * Overrides the global colors config for this series.
+   */
+  colors?: LineChartColors;
+  /**
+   * Stroke width for this line in pixels.
+   * Overrides the default stroke width for this series.
+   * @default 2
+   */
+  strokeWidth?: number;
+};
+
+/**
+ * Configuration for multi-line hover behavior.
+ */
+export type MultiLineHoverConfig = {
+  /**
+   * Whether to show hover dots on all lines at the current x-coordinate.
+   * If true (default), displays dots on all lines at the hover position.
+   * If false, only shows the dot on the closest line to cursor.
+   * @default true
+   */
+  showAllAtX?: boolean;
+  /**
+   * Whether to highlight the closest line to the cursor.
+   * If true, the nearest line is visually emphasized.
+   * @default false
+   */
+  highlightClosest?: boolean;
+};
+
+/**
  * Main configuration object for the LineChart component.
  */
 export type LineChartConfig = {
   /**
-   * Array of data points to plot on the chart.
+   * Array of data points to plot on the chart (single line mode).
    * Must contain at least one point.
+   * Use either `data` OR `series`, not both.
    */
-  data: LineChartDataPoint[];
+  data?: LineChartDataPoint[];
+  /**
+   * Array of line series to plot on the chart (multi-line mode).
+   * Each series represents a separate line with its own data and styling.
+   * Use either `data` OR `series`, not both.
+   */
+  series?: LineSeriesData[];
+  /**
+   * Configuration for multi-line hover behavior.
+   * Only applies when using `series` (multi-line mode).
+   */
+  multiLineHover?: MultiLineHoverConfig;
   /**
    * Configuration for hover/touch interactions.
    * If not provided, interactions are disabled.
@@ -146,6 +245,7 @@ export type LineChartConfig = {
   /**
    * Color configuration for chart elements.
    * If not provided, uses default colors.
+   * In multi-line mode, this serves as the default for series without specific colors.
    */
   colors?: LineChartColors;
   /**
