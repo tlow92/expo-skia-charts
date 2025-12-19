@@ -25,8 +25,16 @@ export function Chart({ config }: LineChartProps) {
   };
 
   // Calculate margins for axes
-  const MARGIN_LEFT = config.yAxis?.enabled ? 50 : 0;
-  const MARGIN_RIGHT = config.xAxis?.enabled ? 14 : 0; // X-axis labels are 100px wide, centered
+  const MARGIN_LEFT = config.yAxis?.enabled
+    ? 50
+    : (config.hover?.dotSize ?? config.hover?.showDot)
+      ? 6
+      : 0;
+  const MARGIN_RIGHT = config.xAxis?.enabled
+    ? 14
+    : (config.hover?.dotSize ?? config.hover?.showDot)
+      ? 6
+      : 0; // X-axis labels are 100px wide, centered
   const MARGIN_TOP = config.yAxis?.enabled ? 10 : 0; // Prevent Y-axis label clipping
   const MARGIN_BOTTOM = config.xAxis?.enabled ? 30 : 0;
   const chartWidth = size.width - MARGIN_LEFT - MARGIN_RIGHT;

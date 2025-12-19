@@ -122,6 +122,10 @@ export default function HomeScreen() {
               enabled: true,
               showDot: true,
               highlightLine: true,
+              onHover: (data) => {
+                // biome-ignore lint/suspicious/noConsole: demo purpose
+                console.log(new Date(data.x));
+              },
             },
             colors: {
               lineBase: "#9EB1FF",

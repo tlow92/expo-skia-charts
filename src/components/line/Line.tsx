@@ -29,29 +29,17 @@ export function Line() {
     return newy || -300;
   }, [path, clampedX]);
 
-  // TODO: update to real props
-  const pointRadius = useSharedValue(0);
-
   const clipBeforeCursor = useDerivedValue(() => {
-    if (colors?.lineBase)
-      return rect(-PADDING, -PADDING, width + PADDING, height + PADDING);
-    return rect(
-      clampedX.value + DOT_SIZE * 0.5,
-      -PADDING,
-      width + 2,
-      height + PADDING
-    );
+    // TODO: we probably need to fix this properly if we want to introduce reverse highlighting
+    // if (colors?.lineBase)
+    return rect(-PADDING, -PADDING, width + PADDING, height + PADDING);
+    // return rect(clampedX.value + DOT_SIZE * 0.5, -PADDING, width + 2, height + PADDING);
   }, [clampedX, colors?.highlightColor, width, height]);
 
   const clipAfterCursor = useDerivedValue(() => {
     if (!hover?.highlightLine)
       return rect(-PADDING, -PADDING, width + PADDING, height + PADDING);
-    return rect(
-      -2,
-      -PADDING,
-      clampedX.value + pointRadius.value * 0.5,
-      height + PADDING
-    );
+    return rect(-2, -PADDING, clampedX.value + DOT_SIZE * 0.5, height + PADDING);
   }, [clampedX, colors?.highlightColor, width, height]);
 
   return (
