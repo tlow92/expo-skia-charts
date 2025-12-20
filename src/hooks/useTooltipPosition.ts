@@ -18,6 +18,7 @@ interface UseTooltipPositionParams {
   offset: { x: number; y: number };
   marginLeft: number;
   marginTop: number;
+  data: LineChartDataPoint[];
 }
 
 export function useTooltipPosition({
@@ -32,6 +33,7 @@ export function useTooltipPosition({
   offset,
   marginLeft,
   marginTop,
+  data,
 }: UseTooltipPositionParams): AnimatedStyle<ViewStyle> {
   return useAnimatedStyle(() => {
     "worklet";
@@ -45,8 +47,27 @@ export function useTooltipPosition({
     }
 
     // Base position (either snapped to data point or smooth follow)
-    let baseX = x.value;
-    let baseY = y.value;
+    let baseX: number;
+    let baseY: number;
+
+    if (snapToPoint && data.length > 0) {
+      // Calculate screen coordinates for the data point
+      const xValues = data.map((point) => point.x);
+      const yValues = data.map((point) => point.y);
+      const minX = Math.min(...xValues);
+      const maxX = Math.max(...xValues);
+      const minY = Math.min(...yValues);
+      const maxY = Math.max(...yValues);
+
+      const point = dataPoint.value;
+      // Map data point to screen coordinates
+      baseX = ((point.x - minX) / (maxX - minX)) * chartWidth;
+      baseY = chartHeight - ((point.y - minY) / (maxY - minY)) * chartHeight;
+    } else {
+      // Smooth follow cursor
+      baseX = x.value;
+      baseY = y.value;
+    }
 
     // Apply offset
     let posX = baseX + offset.x + marginLeft;
@@ -91,5 +112,6 @@ export function useTooltipPosition({
     offset.y,
     marginLeft,
     marginTop,
+    data,
   ]);
 }

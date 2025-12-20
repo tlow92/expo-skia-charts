@@ -150,7 +150,9 @@ export default function HomeScreen() {
         />
       </View>
 
-      <Text style={{ fontSize: 24, marginBottom: 8 }}>With Custom Tooltip</Text>
+      <Text style={{ fontSize: 24, marginBottom: 8 }}>
+        With Custom Tooltip (Snap to Point)
+      </Text>
       <View style={{ height: 200, marginBottom: 24 }}>
         <LineChart.Chart
           config={{
@@ -185,6 +187,53 @@ export default function HomeScreen() {
                     </Text>
                   </View>
                 ),
+                snapToPoint: true,
+              },
+            },
+            xAxis: {
+              enabled: true,
+              isTimeData: true,
+              showGridLines: true,
+            },
+            yAxis: {
+              enabled: true,
+              showGridLines: true,
+            },
+          }}
+        />
+      </View>
+
+      <Text style={{ fontSize: 24, marginBottom: 8 }}>
+        With Smooth Follow Tooltip (No Snap)
+      </Text>
+      <View style={{ height: 200, marginBottom: 24 }}>
+        <LineChart.Chart
+          config={{
+            data: chartData,
+            hover: {
+              enabled: true,
+              showDot: true,
+              tooltip: {
+                renderContent: (dataPoint) => (
+                  <View
+                    style={{
+                      backgroundColor: "#3E63DD",
+                      padding: 8,
+                      borderRadius: 6,
+                    }}
+                  >
+                    <Text style={{ fontSize: 12, color: "#fff" }}>
+                      {new Date(dataPoint.x).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                      })}
+                    </Text>
+                    <Text style={{ fontSize: 16, fontWeight: "bold", color: "#fff" }}>
+                      {dataPoint.y.toFixed(2)}
+                    </Text>
+                  </View>
+                ),
+                snapToPoint: false,
               },
             },
             xAxis: {

@@ -142,6 +142,7 @@ export function Chart({ config }: LineChartProps) {
               chartHeight={chartHeight}
               marginLeft={MARGIN_LEFT}
               marginTop={MARGIN_TOP}
+              data={chartData}
             />
           )}
         </>

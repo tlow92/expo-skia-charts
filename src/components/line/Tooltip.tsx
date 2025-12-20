@@ -19,6 +19,7 @@ interface TooltipProps {
   chartHeight: number;
   marginLeft: number;
   marginTop: number;
+  data: LineChartDataPoint[];
 }
 
 export function Tooltip({
@@ -30,6 +31,7 @@ export function Tooltip({
   chartHeight,
   marginLeft,
   marginTop,
+  data,
 }: TooltipProps) {
   const [tooltipSize, setTooltipSize] = useState({ width: 0, height: 0 });
   const [currentDataPoint, setCurrentDataPoint] = useState<LineChartDataPoint | null>(
@@ -61,6 +63,7 @@ export function Tooltip({
     offset,
     marginLeft,
     marginTop,
+    data,
   });
 
   const onLayout = (event: LayoutChangeEvent) => {
