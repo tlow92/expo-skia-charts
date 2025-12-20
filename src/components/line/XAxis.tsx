@@ -52,11 +52,32 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
 
       {axisData.ticks.map((tick) => {
         let paragraph = null;
+        const labelWidth = 100;
+        const halfWidth = labelWidth / 2;
+
+        // Determine text alignment and position based on overflow
+        let textAlign = TextAlign.Center;
+        let labelX = tick.position - halfWidth;
+
+        // Check if label would overflow on the right
+        const rightEdge = tick.position + halfWidth;
+        if (rightEdge > width) {
+          // Right-align the label at the tick position
+          textAlign = TextAlign.Right;
+          labelX = tick.position - labelWidth;
+        }
+
+        // Check if label would overflow on the left
+        if (labelX < 0) {
+          // Left-align the label at position 0
+          textAlign = TextAlign.Left;
+          labelX = tick.position;
+        }
 
         if (customFontMgr) {
           try {
             const paragraphStyle = {
-              textAlign: TextAlign.Center,
+              textAlign,
             };
             const textStyle = {
               color: Skia.Color(color),
@@ -68,7 +89,7 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
             builder.addText(tick.label);
             builder.pop();
             paragraph = builder.build();
-            paragraph.layout(100);
+            paragraph.layout(labelWidth);
           } catch (error) {
             console.warn("Failed to build paragraph for XAxis label:", error);
           }
@@ -99,9 +120,9 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
             {paragraph && (
               <Paragraph
                 paragraph={paragraph}
-                x={tick.position - 50}
+                x={labelX}
                 y={fontSize + 5}
-                width={100}
+                width={labelWidth}
               />
             )}
           </Group>

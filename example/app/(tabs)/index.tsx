@@ -60,6 +60,10 @@ export default function HomeScreen() {
             xAxis: {
               enabled: true,
               isTimeData: true,
+              formatter: (value) =>
+                Intl.DateTimeFormat("de-DE", {
+                  dateStyle: "short",
+                }).format(new Date(value)),
             },
             yAxis: {
               enabled: true,
