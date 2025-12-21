@@ -86,7 +86,8 @@ export function calculateYAxis(
   const domainMin = Math.max(0, minY - padding);
   const domainMax = maxY + padding;
 
-  const scale = scaleLinear().domain([domainMin, domainMax]).range([0, height]);
+  // Reverse the range so minimum is at bottom (height) and maximum at top (0)
+  const scale = scaleLinear().domain([domainMin, domainMax]).range([height, 0]);
 
   const tickValues = scale.ticks(tickCount);
 

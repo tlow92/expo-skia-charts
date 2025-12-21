@@ -18,8 +18,8 @@ import { YAxis } from "./YAxis";
 
 export function Chart({ config }: LineChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const x = useSharedValue(0);
-  const y = useSharedValue(0);
+  const x = useSharedValue(Infinity);
+  const y = useSharedValue(Infinity);
   const selectedDataPoint = useSharedValue<LineChartDataPoint | null>(null);
 
   // Detect multi-line mode
