@@ -24,7 +24,7 @@ export function Chart({ config }: LineChartProps) {
 
   // Detect multi-line mode
   const isMultiLine = !!config.series;
-  const chartData = config.data ?? (config.series?.[0]?.data ?? []);
+  const chartData = config.data ?? config.series?.[0]?.data ?? [];
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -88,7 +88,10 @@ export function Chart({ config }: LineChartProps) {
                   {/* Y-Axis */}
                   {config.yAxis?.enabled && (
                     <Group
-                      transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
+                      transform={[
+                        { translateX: MARGIN_LEFT },
+                        { translateY: MARGIN_TOP },
+                      ]}
                     >
                       <YAxis
                         data={chartData}

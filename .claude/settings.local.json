@@ -10,7 +10,10 @@
       "mcp__ide__getDiagnostics",
       "Bash(yarn test:*)",
       "Bash(git pull:*)",
-      "Bash(yarn add:*)"
+      "Bash(yarn add:*)",
+      "Bash(npx create-docusaurus:*)",
+      "Bash(yarn docs:build)",
+      "Bash(yarn start)"
     ]
   },
   "enabledMcpjsonServers": [

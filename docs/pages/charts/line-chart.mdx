@@ -1,0 +1,509 @@
+---
+sidebar_position: 1
+---
+
+import ChartDemo from '@site/src/components/ChartDemo';
+
+# LineChart
+
+The LineChart component provides a performant, interactive line chart for React Native and web.
+
+## Basic Example
+
+The simplest line chart requires only data points with `x` and `y` values:
+
+<ChartDemo
+  title="Basic Line Chart"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    }))
+  }}
+  height={300}
+/>
+
+```typescript
+import { LineChart } from "expo-skia-charts";
+
+const data = Array.from({ length: 30 }, (_, i) => ({
+  x: new Date(2024, 0, i + 1).getTime(),
+  y: Math.random() * 100
+}));
+
+<LineChart.Chart config={{ data }} />
+```
+
+## Interactive Features
+
+### Hover Dot
+
+Enable hover interactions with a visible dot at the data point:
+
+<ChartDemo
+  title="With Hover Dot"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    hover: {
+      enabled: true,
+      showDot: true,
+    }
+  }}
+/>
+```
+
+### Highlight Line
+
+Add a vertical highlight line that follows your touch/cursor:
+
+<ChartDemo
+  title="With Highlighted Line"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    }
+  }}
+/>
+```
+
+### Custom Tooltips
+
+Create custom tooltip components that display data point information:
+
+<ChartDemo
+  title="Custom Tooltip (Snap to Point)"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <div style={{
+            backgroundColor: 'white',
+            padding: '8px',
+            borderRadius: '6px',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          }}>
+            <div style={{ fontSize: '12px', color: '#666' }}>
+              {new Date(dataPoint.x).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+              })}
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#000' }}>
+              {dataPoint.y.toFixed(2)}
+            </div>
+          </div>
+        ),
+        snapToPoint: true,
+      },
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    hover: {
+      enabled: true,
+      showDot: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <View style={{ backgroundColor: 'white', padding: 8, borderRadius: 6 }}>
+            <Text>{new Date(dataPoint.x).toLocaleDateString()}</Text>
+            <Text style={{ fontWeight: 'bold' }}>{dataPoint.y.toFixed(2)}</Text>
+          </View>
+        ),
+        snapToPoint: true,
+      },
+    },
+  }}
+/>
+```
+
+## Axes and Grid Lines
+
+### X and Y Axes
+
+Add labeled axes to your chart:
+
+<ChartDemo
+  title="With Axes"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      formatter: (value) =>
+        new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+        }).format(new Date(value)),
+    },
+    yAxis: {
+      enabled: true,
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      formatter: (value) =>
+        new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+        }).format(new Date(value)),
+    },
+    yAxis: {
+      enabled: true,
+    }
+  }}
+/>
+```
+
+### Grid Lines
+
+Add grid lines for better readability:
+
+<ChartDemo
+  title="With Grid Lines"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      gridLineColor: '#e0e0e0',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      gridLineColor: '#e0e0e0',
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      gridLineColor: '#e0e0e0',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      gridLineColor: '#e0e0e0',
+    }
+  }}
+/>
+```
+
+## Styling
+
+### Custom Colors
+
+Customize chart colors to match your brand:
+
+<ChartDemo
+  title="Custom Styled Chart"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: Math.random() * 100
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    colors: {
+      lineBase: '#9EB1FF',
+      highlightColor: '#3E63DD',
+      dotBase: '#0090FF',
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      color: '#3E63DD',
+      gridLineColor: '#E0E7FF',
+      tickCount: 6,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      color: '#3E63DD',
+      gridLineColor: '#E0E7FF',
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    data: data,
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    colors: {
+      lineBase: '#9EB1FF',
+      highlightColor: '#3E63DD',
+      dotBase: '#0090FF',
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      color: '#3E63DD',
+      gridLineColor: '#E0E7FF',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      color: '#3E63DD',
+      gridLineColor: '#E0E7FF',
+    }
+  }}
+/>
+```
+
+## Multiple Lines
+
+Display multiple data series on the same chart:
+
+<ChartDemo
+  title="Multiple Lines"
+  config={{
+    series: [
+      {
+        id: 'series1',
+        label: 'Revenue',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: Math.random() * 100
+        })),
+        colors: {
+          highlightColor: '#3E63DD',
+          lineBase: '#9EB1FF',
+          dotBase: '#0090FF',
+        },
+      },
+      {
+        id: 'series2',
+        label: 'Expenses',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: Math.random() * 70 + 10
+        })),
+        colors: {
+          highlightColor: '#E5484D',
+          lineBase: '#FFBDBD',
+          dotBase: '#E5484D',
+        },
+      },
+      {
+        id: 'series3',
+        label: 'Profit',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: Math.random() * 30
+        })),
+        colors: {
+          highlightColor: '#30A46C',
+          lineBase: '#B4E5C9',
+          dotBase: '#30A46C',
+        },
+      },
+    ],
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+```typescript
+<LineChart.Chart
+  config={{
+    series: [
+      {
+        id: 'series1',
+        label: 'Revenue',
+        data: revenueData,
+        colors: {
+          highlightColor: '#3E63DD',
+          lineBase: '#9EB1FF',
+          dotBase: '#0090FF',
+        },
+      },
+      {
+        id: 'series2',
+        label: 'Expenses',
+        data: expensesData,
+        colors: {
+          highlightColor: '#E5484D',
+          lineBase: '#FFBDBD',
+          dotBase: '#E5484D',
+        },
+      },
+    ],
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+/>
+```
+
+## Configuration Reference
+
+### LineChartConfig
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `data` | `DataPoint[]` | Array of data points (for single line) |
+| `series` | `SeriesConfig[]` | Array of series configurations (for multiple lines) |
+| `hover` | `HoverConfig` | Hover interaction configuration |
+| `xAxis` | `AxisConfig` | X-axis configuration |
+| `yAxis` | `AxisConfig` | Y-axis configuration |
+| `colors` | `ColorConfig` | Global color configuration |
+
+### DataPoint
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `x` | `number` | X-axis value (timestamp for time series) |
+| `y` | `number` | Y-axis value |
+
+### HoverConfig
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `enabled` | `boolean` | `false` | Enable hover interactions |
+| `showDot` | `boolean` | `false` | Show dot at hovered point |
+| `highlightLine` | `boolean` | `false` | Show vertical highlight line |
+| `tooltip` | `TooltipConfig` | - | Custom tooltip configuration |
+| `onHover` | `(data: DataPoint) => void` | - | Callback when hovering over a point |
+
+### AxisConfig
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `enabled` | `boolean` | `false` | Show the axis |
+| `showGridLines` | `boolean` | `false` | Show grid lines |
+| `gridLineColor` | `string` | `'#e0e0e0'` | Color of grid lines |
+| `color` | `string` | `'#000'` | Color of axis labels |
+| `isTimeData` | `boolean` | `false` | Format as time series (x-axis only) |
+| `formatter` | `(value: number) => string` | - | Custom label formatter |
+| `tickCount` | `number` | - | Number of tick marks |
+
+### ColorConfig
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `lineBase` | `string` | `'#3E63DD'` | Base line color |
+| `highlightColor` | `string` | `'#0090FF'` | Highlighted line color |
+| `dotBase` | `string` | `'#3E63DD'` | Dot color |
+
+## Performance Tips
+
+1. **Memoize data**: Use `useMemo` to prevent unnecessary recalculations
+2. **Limit data points**: For best performance, keep data points under 1000
+3. **Optimize tooltips**: Keep custom tooltip components lightweight
+4. **Use callbacks wisely**: Avoid heavy computations in `onHover` callbacks
+
+## Next Steps
+
+- [Examples](./examples.mdx) - Browse more interactive examples
+- [API Reference](../api/types.md) - Full TypeScript API documentation

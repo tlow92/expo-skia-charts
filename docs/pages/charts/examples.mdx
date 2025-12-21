@@ -1,0 +1,567 @@
+---
+sidebar_position: 2
+---
+
+import ChartDemo from '@site/src/components/ChartDemo';
+
+# Examples
+
+Browse a collection of chart examples showcasing different features and use cases.
+
+## Basic Charts
+
+### Simple Line Chart
+
+The most basic line chart with minimal configuration:
+
+<ChartDemo
+  title="Simple Line"
+  config={{
+    data: Array.from({ length: 20 }, (_, i) => ({
+      x: i,
+      y: Math.sin(i / 3) * 50 + 50
+    }))
+  }}
+  height={250}
+/>
+
+### Sparse Data
+
+Charts work well with sparse data points:
+
+<ChartDemo
+  title="Sparse Data"
+  config={{
+    data: [
+      { x: 1, y: 10 },
+      { x: 5, y: 45 },
+      { x: 8, y: 30 },
+      { x: 15, y: 70 },
+      { x: 20, y: 55 },
+    ]
+  }}
+  height={250}
+/>
+
+## Time Series
+
+### Daily Data
+
+Display time-based data with formatted dates:
+
+<ChartDemo
+  title="Daily Time Series"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: 50 + Math.sin(i / 5) * 30 + Math.random() * 10
+    })),
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      formatter: (value) =>
+        new Intl.DateTimeFormat('en-US', {
+          month: 'short',
+          day: 'numeric',
+        }).format(new Date(value)),
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+### Hourly Data
+
+Fine-grained time series with hourly intervals:
+
+<ChartDemo
+  title="Hourly Data"
+  config={{
+    data: Array.from({ length: 24 }, (_, i) => ({
+      x: new Date(2024, 0, 1, i).getTime(),
+      y: 20 + Math.sin(i / 4) * 15 + Math.random() * 5
+    })),
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      formatter: (value) =>
+        new Intl.DateTimeFormat('en-US', {
+          hour: 'numeric',
+        }).format(new Date(value)),
+      tickCount: 6,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+## Interactive Charts
+
+### Full Interactive Chart
+
+Chart with all interactive features enabled:
+
+<ChartDemo
+  title="Fully Interactive"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: 50 + Math.sin(i / 5) * 25 + Math.random() * 10
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <div style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            fontSize: '14px',
+          }}>
+            <div>{new Date(dataPoint.x).toLocaleDateString('en-US')}</div>
+            <div style={{ fontWeight: 'bold', marginTop: '4px' }}>
+              {dataPoint.y.toFixed(1)}
+            </div>
+          </div>
+        ),
+        snapToPoint: true,
+      },
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+### Smooth Follow Tooltip
+
+Tooltip that smoothly follows cursor without snapping:
+
+<ChartDemo
+  title="Smooth Follow"
+  config={{
+    data: Array.from({ length: 40 }, (_, i) => ({
+      x: i,
+      y: 50 + Math.sin(i / 4) * 20 + Math.cos(i / 7) * 15
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <div style={{
+            backgroundColor: '#3E63DD',
+            color: 'white',
+            padding: '6px 10px',
+            borderRadius: '4px',
+            fontSize: '12px',
+            fontWeight: 'bold',
+          }}>
+            {dataPoint.y.toFixed(1)}
+          </div>
+        ),
+        snapToPoint: false,
+      },
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+## Styled Charts
+
+### Dark Theme
+
+Chart styled for dark backgrounds:
+
+<ChartDemo
+  title="Dark Theme"
+  config={{
+    data: Array.from({ length: 30 }, (_, i) => ({
+      x: new Date(2024, 0, i + 1).getTime(),
+      y: 50 + Math.sin(i / 5) * 30
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    colors: {
+      lineBase: '#7DD3FC',
+      highlightColor: '#06B6D4',
+      dotBase: '#22D3EE',
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      color: '#94A3B8',
+      gridLineColor: '#334155',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      color: '#94A3B8',
+      gridLineColor: '#334155',
+    }
+  }}
+  height={300}
+/>
+
+### Accent Colors
+
+Chart with brand accent colors:
+
+<ChartDemo
+  title="Accent Colors"
+  config={{
+    data: Array.from({ length: 25 }, (_, i) => ({
+      x: i,
+      y: 50 + Math.sin(i / 4) * 25 + Math.random() * 10
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    colors: {
+      lineBase: '#FCA5A5',
+      highlightColor: '#DC2626',
+      dotBase: '#EF4444',
+    },
+    xAxis: {
+      enabled: true,
+      showGridLines: true,
+      color: '#DC2626',
+      gridLineColor: '#FEE2E2',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      color: '#DC2626',
+      gridLineColor: '#FEE2E2',
+    }
+  }}
+  height={300}
+/>
+
+## Multiple Series
+
+### Two Lines
+
+Comparing two data series:
+
+<ChartDemo
+  title="Two Series"
+  config={{
+    series: [
+      {
+        id: 'a',
+        label: 'Series A',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: 50 + Math.sin(i / 5) * 20 + Math.random() * 5
+        })),
+        colors: {
+          lineBase: '#9EB1FF',
+          highlightColor: '#3E63DD',
+          dotBase: '#0090FF',
+        },
+      },
+      {
+        id: 'b',
+        label: 'Series B',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: 60 + Math.cos(i / 4) * 15 + Math.random() * 5
+        })),
+        colors: {
+          lineBase: '#FFBDBD',
+          highlightColor: '#E5484D',
+          dotBase: '#E5484D',
+        },
+      },
+    ],
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+### Three Lines
+
+Multiple series comparison:
+
+<ChartDemo
+  title="Three Series"
+  config={{
+    series: [
+      {
+        id: 'revenue',
+        label: 'Revenue',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: 70 + Math.sin(i / 5) * 15 + Math.random() * 5
+        })),
+        colors: {
+          lineBase: '#9EB1FF',
+          highlightColor: '#3E63DD',
+          dotBase: '#0090FF',
+        },
+      },
+      {
+        id: 'expenses',
+        label: 'Expenses',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: 50 + Math.sin(i / 4) * 12 + Math.random() * 4
+        })),
+        colors: {
+          lineBase: '#FFBDBD',
+          highlightColor: '#E5484D',
+          dotBase: '#E5484D',
+        },
+      },
+      {
+        id: 'profit',
+        label: 'Profit',
+        data: Array.from({ length: 30 }, (_, i) => ({
+          x: new Date(2024, 0, i + 1).getTime(),
+          y: 20 + Math.sin(i / 6) * 10 + Math.random() * 3
+        })),
+        colors: {
+          lineBase: '#B4E5C9',
+          highlightColor: '#30A46C',
+          dotBase: '#30A46C',
+        },
+      },
+    ],
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={350}
+/>
+
+## Mathematical Functions
+
+### Sine Wave
+
+Smooth sine wave visualization:
+
+<ChartDemo
+  title="Sine Wave"
+  config={{
+    data: Array.from({ length: 100 }, (_, i) => ({
+      x: i,
+      y: 50 + Math.sin(i / 10) * 40
+    })),
+    colors: {
+      lineBase: '#A78BFA',
+      highlightColor: '#8B5CF6',
+      dotBase: '#7C3AED',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+### Combined Functions
+
+Multiple mathematical functions:
+
+<ChartDemo
+  title="Combined Functions"
+  config={{
+    data: Array.from({ length: 100 }, (_, i) => ({
+      x: i,
+      y: 50 + Math.sin(i / 10) * 20 + Math.cos(i / 5) * 15
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+    },
+    colors: {
+      lineBase: '#FCD34D',
+      highlightColor: '#F59E0B',
+      dotBase: '#D97706',
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    }
+  }}
+  height={300}
+/>
+
+## Real-World Use Cases
+
+### Stock Price
+
+Simulated stock price chart:
+
+<ChartDemo
+  title="Stock Price"
+  config={{
+    data: Array.from({ length: 60 }, (_, i) => {
+      const basePrice = 150;
+      const trend = i * 0.5;
+      const volatility = Math.random() * 10 - 5;
+      return {
+        x: new Date(2024, 0, 1 + i).getTime(),
+        y: basePrice + trend + volatility
+      };
+    }),
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <div style={{
+            backgroundColor: 'white',
+            padding: '8px 12px',
+            borderRadius: '4px',
+            border: '1px solid #e0e0e0',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          }}>
+            <div style={{ fontSize: '12px', color: '#666' }}>
+              {new Date(dataPoint.x).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric'
+              })}
+            </div>
+            <div style={{ fontSize: '16px', fontWeight: 'bold', color: '#000', marginTop: '4px' }}>
+              ${dataPoint.y.toFixed(2)}
+            </div>
+          </div>
+        ),
+        snapToPoint: true,
+      },
+    },
+    colors: {
+      lineBase: '#10B981',
+      highlightColor: '#059669',
+      dotBase: '#047857',
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      tickCount: 6,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      formatter: (value) => `$${value.toFixed(0)}`,
+    }
+  }}
+  height={350}
+/>
+
+### Temperature
+
+Temperature data over time:
+
+<ChartDemo
+  title="Temperature (°C)"
+  config={{
+    data: Array.from({ length: 24 }, (_, i) => ({
+      x: new Date(2024, 0, 1, i).getTime(),
+      y: 15 + Math.sin((i - 6) / 4) * 8 + Math.random() * 2
+    })),
+    hover: {
+      enabled: true,
+      showDot: true,
+      tooltip: {
+        renderContent: (dataPoint) => (
+          <div style={{
+            backgroundColor: '#EF4444',
+            color: 'white',
+            padding: '6px 10px',
+            borderRadius: '4px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+          }}>
+            {dataPoint.y.toFixed(1)}°C
+          </div>
+        ),
+        snapToPoint: true,
+      },
+    },
+    colors: {
+      lineBase: '#FCA5A5',
+      highlightColor: '#EF4444',
+      dotBase: '#DC2626',
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+      formatter: (value) =>
+        new Intl.DateTimeFormat('en-US', {
+          hour: 'numeric',
+        }).format(new Date(value)),
+      tickCount: 6,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+      formatter: (value) => `${value.toFixed(0)}°`,
+    }
+  }}
+  height={300}
+/>
+
+## Next Steps
+
+- [LineChart Guide](./line-chart.mdx) - Detailed feature documentation
+- [API Reference](../api/types.md) - Full TypeScript API
