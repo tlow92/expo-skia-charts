@@ -10,13 +10,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Line",
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="donutchart"
         options={{
-          title: "Explore",
+          title: "Donut",
         }}
       />
     </Tabs>
