@@ -1,31 +1,156 @@
+import { MDXComponents, MDXStyles } from "@bacons/mdx";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Dimensions, Platform, ScrollView, StyleSheet, View } from "react-native";
-import { Navigation } from "../components/Navigation";
+import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "react-native-reanimated";
+import { GettingStartedSection } from "../components/GettingStartedSection";
+import { Navigation } from "../components/Navigation";
+import { Table } from "../components/Table";
 
 export default function RootLayout() {
   const isDesktop = Platform.OS === "web" && Dimensions.get("window").width > 768;
 
+  const mdxStyles = {
+    h1: {
+      fontSize: 32,
+      fontWeight: "bold" as const,
+      marginBottom: 16,
+      marginTop: 8,
+      color: "#1a1a1a",
+    },
+    h2: {
+      fontSize: 24,
+      fontWeight: "bold" as const,
+      marginTop: 32,
+      marginBottom: 12,
+      color: "#1a1a1a",
+    },
+    h3: {
+      fontSize: 20,
+      fontWeight: "600" as const,
+      marginTop: 24,
+      marginBottom: 8,
+      color: "#1a1a1a",
+    },
+    h4: {
+      fontSize: 18,
+      fontWeight: "600" as const,
+      marginTop: 20,
+      marginBottom: 8,
+      color: "#374151",
+    },
+    p: {
+      fontSize: 16,
+      lineHeight: 24,
+      marginBottom: 12,
+      color: "#374151",
+    },
+    strong: {
+      fontWeight: "bold" as const,
+      color: "#1a1a1a",
+    },
+    em: {
+      fontStyle: "italic" as const,
+    },
+    a: {
+      color: "#3b82f6",
+      textDecorationLine: "underline" as const,
+    },
+    ul: {
+      marginBottom: 12,
+      paddingLeft: 8,
+    },
+    ol: {
+      marginBottom: 12,
+      paddingLeft: 8,
+    },
+    blockquote: {
+      borderLeftWidth: 4,
+      borderLeftColor: "#e5e7eb",
+      paddingLeft: 16,
+      marginVertical: 12,
+      fontStyle: "italic" as const,
+      color: "#6b7280",
+    },
+    table: {
+      marginVertical: 12,
+      borderWidth: 1,
+      borderColor: "#e5e7eb",
+      borderRadius: 6,
+    },
+    thead: {
+      backgroundColor: "#f9fafb",
+    },
+    th: {
+      fontSize: 14,
+      fontWeight: "600" as const,
+      padding: 12,
+      color: "#1a1a1a",
+      borderBottomWidth: 1,
+      borderBottomColor: "#e5e7eb",
+    },
+    td: {
+      fontSize: 14,
+      padding: 12,
+      color: "#374151",
+      borderBottomWidth: 1,
+      borderBottomColor: "#f3f4f6",
+    },
+    tr: {
+      borderBottomWidth: 1,
+      borderBottomColor: "#e5e7eb",
+    },
+  };
+
   return (
     <ThemeProvider value={DefaultTheme}>
-      <View style={styles.container}>
-        {isDesktop && <Navigation />}
-
-        <Stack
-          screenOptions={{
-            headerShown: false,
+      <MDXStyles {...(mdxStyles as any)}>
+        <MDXComponents
+          components={{
+            GettingStartedSection,
+            Table,
+            code: ({ children }) => (
+              <SyntaxHighlighter
+                language="typescript"
+                style={vscDarkPlus}
+                customStyle={{
+                  margin: 0,
+                  borderRadius: 6,
+                  fontSize: 14,
+                }}
+              >
+                {children}
+              </SyntaxHighlighter>
+            ),
+            li: ({ children, ...props }) => (
+              <View>
+                <Text {...props}>
+                  <Text
+                    style={{ fontSize: (props.fontSize || 14) * 1.4, fontWeight: "bold" }}
+                  >{`\u2022 `}</Text>
+                  {children}
+                </Text>
+              </View>
+            ),
           }}
         >
-          <Stack.Screen name="index" />
-          <Stack.Screen name="getting-started" />
-          <Stack.Screen name="installation" />
-          <Stack.Screen name="api-reference" />
-          <Stack.Screen name="examples" />
-        </Stack>
-      </View>
-      <StatusBar style="auto" />
+          <View style={styles.container}>
+            {isDesktop && <Navigation />}
+
+            <Stack
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              <Stack.Screen name="(pages)" />
+            </Stack>
+          </View>
+          <StatusBar style="auto" />
+        </MDXComponents>
+      </MDXStyles>
     </ThemeProvider>
   );
 }

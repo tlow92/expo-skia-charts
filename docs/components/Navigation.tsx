@@ -60,7 +60,7 @@ export const Navigation = React.memo(function Navigation() {
                 {item.subItems.map((subItem) => {
                   const subItemActive = isActive(subItem.href);
                   return (
-                    // @ts-ignore - asChild prop is valid but type definitions are incomplete
+                    // @ts-expect-error - asChild prop is valid but type definitions are incomplete
                     <Link key={subItem.href} href={subItem.href as Href} asChild>
                       <TouchableOpacity
                         style={StyleSheet.flatten([

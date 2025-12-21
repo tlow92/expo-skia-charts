@@ -13,6 +13,7 @@ export default function PagesLayout() {
         maxWidth: 900,
         width: "100%",
         alignSelf: "center",
+        gap: 8,
       }}
     >
       <Slot />

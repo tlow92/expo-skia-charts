@@ -1,4 +1,3 @@
-export const content = `
 # Installation
 
 This guide will walk you through installing expo-skia-charts and its dependencies.
@@ -9,16 +8,14 @@ Before installing, ensure your environment meets these requirements:
 
 - **React Native** ≥ 0.79
 - **React** ≥ 19
-- **Node.js** ≥ 18
-- **iOS** 12+ or **Android** API 21+
 
 ## Install the Package
 
 Install expo-skia-charts and its peer dependencies:
 
-\`\`\`bash
+```bash
 npx expo install expo-skia-charts @shopify/react-native-skia react-native-reanimated react-native-gesture-handler
-\`\`\`
+```
 
 ### Web
 
@@ -28,7 +25,7 @@ For web support, follow the [@shopify/react-native-skia web setup guide](https:/
 
 Create a simple chart to verify everything is working:
 
-\`\`\`typescript
+```typescript
 import { View } from "react-native";
 import { LineChart } from "expo-skia-charts";
 
@@ -47,10 +44,6 @@ export default function App() {
     </View>
   );
 }
-\`\`\`
+```
 
 If you see a line chart, you're all set!
-`;
-
-export const id = "installation";
-export const title = "Installation";

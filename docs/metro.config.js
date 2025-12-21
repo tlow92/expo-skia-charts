@@ -1,6 +1,7 @@
 const path = require("node:path");
 const { getDefaultConfig } = require("@expo/metro-config");
 const { withMetroConfig } = require("react-native-monorepo-config");
+const { withMdx } = require("@bacons/mdx/metro");
 
 const root = path.resolve(__dirname, "..");
 
@@ -10,11 +11,14 @@ const root = path.resolve(__dirname, "..");
  *
  * @type {import('metro-config').MetroConfig}
  */
-const config = withMetroConfig(getDefaultConfig(__dirname), {
+let config = withMetroConfig(getDefaultConfig(__dirname), {
   root,
   dirname: __dirname,
 });
 
 config.resolver.unstable_enablePackageExports = true;
+
+// Add MDX support
+config = withMdx(config);
 
 module.exports = config;

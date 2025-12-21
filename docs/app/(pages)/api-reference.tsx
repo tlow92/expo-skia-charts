@@ -1,6 +1,5 @@
-import { MarkdownRenderer } from "../../components/MarkdownRenderer";
-import * as ApiReference from "../../content/api-reference";
+import ApiReferenceContent from "../../content/api-reference.mdx";
 
 export default function ApiReferenceScreen() {
-  return <MarkdownRenderer content={ApiReference.content} />;
+  return <ApiReferenceContent />;
 }

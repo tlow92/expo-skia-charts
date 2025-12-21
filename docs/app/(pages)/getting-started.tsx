@@ -1,5 +1,5 @@
-import { GettingStartedSection } from "../../components/GettingStartedSection";
+import GettingStartedContent from "../../content/getting-started.mdx";
 
 export default function GettingStartedScreen() {
-  return <GettingStartedSection />;
+  return <GettingStartedContent />;
 }

@@ -1,6 +1,5 @@
-import { MarkdownRenderer } from "../../components/MarkdownRenderer";
-import * as Installation from "../../content/installation";
+import InstallationContent from "../../content/installation.mdx";
 
 export default function InstallationScreen() {
-  return <MarkdownRenderer content={Installation.content} />;
+  return <InstallationContent />;
 }

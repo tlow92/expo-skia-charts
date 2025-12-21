@@ -1,0 +1,109 @@
+# API Reference
+
+Complete TypeScript API documentation for expo-skia-charts.
+
+## LineChart
+
+Main line chart component for rendering single or multiple line charts with full customization.
+
+```typescript
+import { LineChart } from "expo-skia-charts";
+
+<LineChart.Chart config={config} />;
+```
+
+### Configuration
+
+```typescript
+interface LineChartConfig {
+  // Data
+  data?: Array<{ x: number; y: number }>;
+  series?: Array<{
+    id: string;
+    label: string;
+    data: Array<{ x: number; y: number }>;
+    colors?: {
+      lineBase?: string;
+      highlightColor?: string;
+      dotBase?: string;
+    };
+  }>;
+
+  // Hover interactions
+  hover?: {
+    enabled?: boolean;
+    showDot?: boolean;
+    highlightLine?: boolean;
+    tooltip?: {
+      renderContent: (dataPoint: { x: number; y: number }) => React.ReactNode;
+      snapToPoint?: boolean;
+    };
+    onHover?: (data: { x: number; y: number }) => void;
+  };
+
+  // X-axis configuration
+  xAxis?: {
+    enabled?: boolean;
+    showGridLines?: boolean;
+    gridLineColor?: string;
+    color?: string;
+    isTimeData?: boolean;
+    formatter?: (value: number) => string;
+    tickCount?: number;
+  };
+
+  // Y-axis configuration
+  yAxis?: {
+    enabled?: boolean;
+    showGridLines?: boolean;
+    gridLineColor?: string;
+    color?: string;
+    formatter?: (value: number) => string;
+    tickCount?: number;
+  };
+
+  // Global colors (used when not using series)
+  colors?: {
+    lineBase?: string;
+    highlightColor?: string;
+    dotBase?: string;
+  };
+}
+```
+
+**Note:** Either `data` or `series` must be provided.
+
+## DonutChart
+
+Interactive donut/pie chart component with labels and center values.
+
+```typescript
+import { DonutChart } from "expo-skia-charts";
+
+<DonutChart
+  data={data}
+  strokeWidth={40}
+  showLabels={true}
+  showCenterValue={true}
+/>;
+```
+
+### Configuration
+
+```typescript
+interface DonutChartProps {
+  // Data array (required)
+  data: Array<{
+    label: string;
+    value: number;
+  }>;
+
+  // Stroke width (optional, default: 30)
+  strokeWidth?: number;
+
+  // Show labels (optional, default: false)
+  showLabels?: boolean;
+
+  // Show center value (optional, default: false)
+  showCenterValue?: boolean;
+}

@@ -16,7 +16,9 @@
       "Bash(cat:*)",
       "Bash(yarn web)",
       "Bash(yarn lint:fix)",
-      "Bash(yarn biome check:*)"
+      "Bash(yarn biome check:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)"
     ]
   },
   "enabledMcpjsonServers": [
