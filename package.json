@@ -33,6 +33,7 @@
   ],
   "scripts": {
     "example": "yarn workspace expo-skia-charts-example",
+    "docs": "yarn workspace expo-skia-charts-docs",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "typecheck": "tsc",
@@ -88,7 +89,8 @@
     "react-native-reanimated": "*"
   },
   "workspaces": [
-    "example"
+    "example",
+    "docs"
   ],
   "packageManager": "yarn@4.11.0",
   "react-native-builder-bob": {
