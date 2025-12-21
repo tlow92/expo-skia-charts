@@ -3,9 +3,8 @@ import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import "react-native-reanimated";
+import { CodeBlock } from "../components/CodeBlock";
 import { GettingStartedSection } from "../components/GettingStartedSection";
 import { Navigation } from "../components/Navigation";
 import { Table } from "../components/Table";
@@ -112,19 +111,7 @@ export default function RootLayout() {
           components={{
             GettingStartedSection,
             Table,
-            code: ({ children }) => (
-              <SyntaxHighlighter
-                language="typescript"
-                style={vscDarkPlus}
-                customStyle={{
-                  margin: 0,
-                  borderRadius: 6,
-                  fontSize: 14,
-                }}
-              >
-                {children}
-              </SyntaxHighlighter>
-            ),
+            code: ({ children }) => <CodeBlock>{children}</CodeBlock>,
             li: ({ children, ...props }) => (
               <View>
                 <Text {...props}>

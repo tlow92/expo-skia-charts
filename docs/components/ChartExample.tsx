@@ -1,8 +1,7 @@
 import type { LineChartConfig } from "expo-skia-charts";
 import { LineChart } from "expo-skia-charts";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { CodeBlock } from "./CodeBlock";
 
 interface ChartExampleProps {
   title: string;
@@ -31,19 +30,7 @@ export function ChartExample({
       </View>
 
       {code && Platform.OS === "web" && (
-        <View style={styles.codeContainer}>
-          <SyntaxHighlighter
-            language="typescript"
-            style={vscDarkPlus}
-            customStyle={{
-              margin: 0,
-              borderRadius: 6,
-              fontSize: 13,
-            }}
-          >
-            {code}
-          </SyntaxHighlighter>
-        </View>
+        <CodeBlock language="typescript">{code}</CodeBlock>
       )}
     </View>
   );
@@ -69,13 +56,5 @@ const styles = StyleSheet.create({
     borderColor: "#e5e7eb",
     padding: 16,
     backgroundColor: "#ffffff",
-  },
-  chart: {
-    // flex: 1,
-  },
-  codeContainer: {
-    marginTop: 12,
-    borderRadius: 6,
-    overflow: "hidden",
   },
 });

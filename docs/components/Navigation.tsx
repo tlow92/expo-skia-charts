@@ -1,7 +1,15 @@
+import { AntDesign } from "@expo/vector-icons";
 import type { Href } from "expo-router";
 import { Link, usePathname } from "expo-router";
 import React from "react";
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Linking,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 interface NavItem {
   title: string;
@@ -33,9 +41,22 @@ export const Navigation = React.memo(function Navigation() {
     return pathname === href;
   };
 
+  const handleGitHubPress = () => {
+    Linking.openURL("https://github.com/tlr-software/expo-skia-charts");
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <Text style={styles.title}>Documentation</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Documentation</Text>
+        <TouchableOpacity
+          style={styles.githubButton}
+          onPress={handleGitHubPress}
+          accessibilityLabel="View on GitHub"
+        >
+          <AntDesign name="github" size={20} color="#111827" />
+        </TouchableOpacity>
+      </View>
       {navItems.map((item) => {
         const itemActive = isActive(item.href);
         return (
@@ -100,11 +121,23 @@ const styles = StyleSheet.create({
     paddingVertical: 24,
     paddingHorizontal: 16,
   },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16,
+  },
   title: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 16,
     color: "#111827",
+  },
+  githubButton: {
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
+    borderColor: "#e5e7eb",
   },
   item: {
     paddingVertical: 8,
