@@ -1,6 +1,6 @@
 import { Canvas, Group } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
-import { View, type LayoutChangeEvent } from "react-native";
+import { type LayoutChangeEvent, View } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
 import { useSharedValue } from "react-native-reanimated";
 import { useLineTouchHandler } from "../../hooks/useLineTouchHandler";
@@ -24,7 +24,7 @@ export function Chart({ config }: LineChartProps) {
 
   // Detect multi-line mode
   const isMultiLine = !!config.series;
-  const chartData = config.data ?? (config.series?.[0]?.data ?? []);
+  const chartData = config.data ?? config.series?.[0]?.data ?? [];
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
@@ -82,13 +82,17 @@ export function Chart({ config }: LineChartProps) {
       {size.width > 0 && size.height > 0 && (
         <>
           <GestureDetector gesture={gesture}>
+            {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
             <Canvas style={{ width: size.width, height: size.height }}>
               <LineChartContextProvider value={context}>
                 <Group>
                   {/* Y-Axis */}
                   {config.yAxis?.enabled && (
                     <Group
-                      transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
+                      transform={[
+                        { translateX: MARGIN_LEFT },
+                        { translateY: MARGIN_TOP },
+                      ]}
                     >
                       <YAxis
                         data={chartData}

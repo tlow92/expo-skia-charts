@@ -1,6 +1,6 @@
 // from https://github.com/Shopify/react-native-skia/blob/main/apps/example/src/Examples/Wallet/Math.ts
-import type { Vector, PathCommand } from "@shopify/react-native-skia";
-import { cartesian2Polar, PathVerb, vec, Skia } from "@shopify/react-native-skia";
+import type { PathCommand, Vector } from "@shopify/react-native-skia";
+import { cartesian2Polar, PathVerb, Skia, vec } from "@shopify/react-native-skia";
 
 const exhaustiveCheck = (value: never): never => {
   "worklet";
@@ -9,7 +9,7 @@ const exhaustiveCheck = (value: never): never => {
 
 const round = (value: number, precision = 0) => {
   "worklet";
-  const p = Math.pow(10, precision);
+  const p = 10 ** precision;
   return Math.round(value * p) / p;
 };
 
@@ -17,7 +17,7 @@ const round = (value: number, precision = 0) => {
 // https://stackoverflow.com/questions/51879836
 const cuberoot = (x: number) => {
   "worklet";
-  const y = Math.pow(Math.abs(x), 1 / 3);
+  const y = Math.abs(x) ** (1 / 3);
   return x < 0 ? -y : y;
 };
 

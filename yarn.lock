@@ -4170,7 +4170,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:^19.1.12":
+"@types/react-syntax-highlighter@npm:^15.5.13":
+  version: 15.5.13
+  resolution: "@types/react-syntax-highlighter@npm:15.5.13"
+  dependencies:
+    "@types/react": "npm:*"
+  checksum: 10c0/e3bca325b27519fb063d3370de20d311c188ec16ffc01e5bc77bdf2d7320756725ee3d0246922cd5d38b75c5065a1bc43d0194e92ecf6556818714b4ffb0967a
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:*, @types/react@npm:^19.1.12":
   version: 19.2.7
   resolution: "@types/react@npm:19.2.7"
   dependencies:
@@ -6644,6 +6653,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.1.8"
     "@shopify/react-native-skia": "npm:2.2.12"
     "@types/gh-pages": "npm:^6"
+    "@types/react-syntax-highlighter": "npm:^15.5.13"
     expo: "npm:~54.0.29"
     expo-constants: "npm:~18.0.12"
     expo-font: "npm:~14.0.10"

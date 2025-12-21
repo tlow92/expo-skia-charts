@@ -1,6 +1,6 @@
 import { LineChart } from "expo-skia-charts";
-import { ScrollView, Text, View } from "react-native";
 import { useMemo } from "react";
+import { ScrollView, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const chartData = useMemo(() => {

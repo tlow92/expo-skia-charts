@@ -1,14 +1,12 @@
 import type { SkPoint } from "@shopify/react-native-skia";
 import * as math from "../../../utils/math";
-import { PADDING, buildLine } from "../utils";
+import { buildLine, PADDING } from "../utils";
 
 jest.mock("../../../utils/math", () => ({
   curveLines: jest.fn(),
 }));
 
-const mockCurveLines = math.curveLines as jest.MockedFunction<
-  typeof math.curveLines
->;
+const mockCurveLines = math.curveLines as jest.MockedFunction<typeof math.curveLines>;
 
 describe("buildLine", () => {
   const WIDTH = 300;
@@ -88,11 +86,7 @@ describe("buildLine", () => {
     buildLine(points, WIDTH, HEIGHT);
 
     expect(mockCurveLines).toHaveBeenCalledTimes(1);
-    expect(mockCurveLines).toHaveBeenCalledWith(
-      expect.any(Array),
-      0.1,
-      "complex"
-    );
+    expect(mockCurveLines).toHaveBeenCalledWith(expect.any(Array), 0.1, "complex");
   });
 
   it("returns path from curveLines", () => {

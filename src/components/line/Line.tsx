@@ -3,8 +3,8 @@ import { useMemo } from "react";
 import { useDerivedValue } from "react-native-reanimated";
 import { useLineChartContext } from "../../providers/LineChartContextProvider";
 import { getYForX } from "../../utils/math";
-import { PADDING, buildLine, buildLineWithDomain } from "./utils";
-import type { LineChartDataPoint, LineChartColors } from "./types";
+import type { LineChartColors, LineChartDataPoint } from "./types";
+import { buildLine, buildLineWithDomain, PADDING } from "./utils";
 
 interface LineProps {
   data?: LineChartDataPoint[];
@@ -13,7 +13,12 @@ interface LineProps {
   domain?: { minX: number; maxX: number; minY: number; maxY: number };
 }
 
-export function Line({ data: propData, colors: propColors, strokeWidth, domain }: LineProps) {
+export function Line({
+  data: propData,
+  colors: propColors,
+  strokeWidth,
+  domain,
+}: LineProps) {
   const {
     size: { width, height },
     x,
@@ -32,8 +37,6 @@ export function Line({ data: propData, colors: propColors, strokeWidth, domain }
     return buildLine(data, width, height);
   }, [data, width, height, domain]);
 
-  if (!data || !path) return null;
-
   const DOT_SIZE = hover?.dotSize ?? 6;
 
   // Clamp x to stay within the data range (0 to width in screen coordinates)
@@ -45,6 +48,7 @@ export function Line({ data: propData, colors: propColors, strokeWidth, domain }
   }, [x, width]);
 
   const cy = useDerivedValue(() => {
+    if (!path) return -300;
     const newy = getYForX(path.toCmds(), clampedX.value);
     return newy || -300;
   }, [path, clampedX]);
@@ -69,6 +73,8 @@ export function Line({ data: propData, colors: propColors, strokeWidth, domain }
   }, [clampedX, colors?.highlightColor, width, height]);
 
   const lineStrokeWidth = strokeWidth ?? 2;
+
+  if (!data || !path) return null;
 
   return (
     <Group transform={[{ translateY: height - PADDING }, { scaleY: -1 }]}>

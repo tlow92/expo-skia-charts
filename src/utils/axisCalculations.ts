@@ -41,7 +41,10 @@ export function calculateXAxis(
     const timeTickValues = interval.range(new Date(minX), new Date(maxX));
 
     // Add the max value if not included
-    if (timeTickValues.length === 0 || timeTickValues[timeTickValues.length - 1]?.getTime() !== maxX) {
+    if (
+      timeTickValues.length === 0 ||
+      timeTickValues[timeTickValues.length - 1]?.getTime() !== maxX
+    ) {
       timeTickValues.push(new Date(maxX));
     }
 

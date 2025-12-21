@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, Platform } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -9,7 +9,7 @@ interface MarkdownRendererProps {
 
 export function MarkdownRenderer({ content }: MarkdownRendererProps) {
   const lines = content.trim().split("\n");
-  const elements: JSX.Element[] = [];
+  const elements: React.ReactElement[] = [];
   let currentCodeBlock: string[] = [];
   let codeLanguage = "";
   let inCodeBlock = false;

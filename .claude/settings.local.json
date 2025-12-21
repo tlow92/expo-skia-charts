@@ -14,7 +14,9 @@
       "Bash(rm:*)",
       "Bash(yarn docs:*)",
       "Bash(cat:*)",
-      "Bash(yarn web)"
+      "Bash(yarn web)",
+      "Bash(yarn lint:fix)",
+      "Bash(yarn biome check:*)"
     ]
   },
   "enabledMcpjsonServers": [

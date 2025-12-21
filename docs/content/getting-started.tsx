@@ -24,37 +24,6 @@ Currently supported:
 
 More chart types coming soon!
 
-## Quick Start
-
-Get up and running with expo-skia-charts in minutes.
-
-### Basic Example
-
-\`\`\`typescript
-import { LineChart } from "expo-skia-charts";
-import { View } from "react-native";
-
-const data = [
-  { x: 1, y: 10 },
-  { x: 2, y: 25 },
-  { x: 3, y: 15 },
-  { x: 4, y: 40 },
-  { x: 5, y: 30 },
-];
-
-function MyChart() {
-  return (
-    <View style={{ height: 300 }}>
-      <LineChart.Chart
-        config={{
-          data: data,
-        }}
-      />
-    </View>
-  );
-}
-\`\`\`
-
 ### Requirements
 
 - React Native ≥ 0.79

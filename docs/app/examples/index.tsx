@@ -1,5 +1,5 @@
-import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Link } from "expo-router";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function ExamplesIndexScreen() {
   return (
@@ -11,6 +11,7 @@ export default function ExamplesIndexScreen() {
       </Text>
 
       <View style={styles.cardContainer}>
+        {/* @ts-ignore - asChild prop is valid but type definitions are incomplete */}
         <Link href="/examples/line-chart" asChild>
           <TouchableOpacity style={styles.card}>
             <Text style={styles.cardTitle}>LineChart Examples</Text>
@@ -22,6 +23,7 @@ export default function ExamplesIndexScreen() {
           </TouchableOpacity>
         </Link>
 
+        {/* @ts-ignore - asChild prop is valid but type definitions are incomplete */}
         <Link href="/examples/donut-chart" asChild>
           <TouchableOpacity style={styles.card}>
             <Text style={styles.cardTitle}>DonutChart Examples</Text>

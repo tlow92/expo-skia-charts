@@ -7,9 +7,9 @@ import {
   useFonts,
 } from "@shopify/react-native-skia";
 import { useMemo } from "react";
+import { Platform } from "react-native";
 import { calculateXAxis } from "../../utils/axisCalculations";
 import type { AxisConfig, LineChartDataPoint } from "./types";
-import { Platform } from "react-native";
 
 type XAxisProps = {
   data: LineChartDataPoint[];

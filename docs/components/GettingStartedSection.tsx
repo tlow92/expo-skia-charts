@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { View, StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
+import * as GettingStarted from "../content/getting-started";
 import { ChartExample } from "./ChartExample";
 import { MarkdownRenderer } from "./MarkdownRenderer";
-import * as GettingStarted from "../content/getting-started";
 
 export function GettingStartedSection() {
   const simpleData = useMemo(() => {
@@ -15,14 +15,9 @@ export function GettingStartedSection() {
     ];
   }, []);
 
-  // Split the content to insert chart example after "Chart Types" section
-  const parts = GettingStarted.content.split("## Quick Start");
-  const beforeQuickStart = parts[0] || "";
-  const afterQuickStart = parts[1] ? `## Quick Start${parts[1]}` : "";
-
   return (
     <View style={styles.container}>
-      <MarkdownRenderer content={beforeQuickStart} />
+      <MarkdownRenderer content={GettingStarted.content} />
 
       <ChartExample
         title="Try It Out!"
@@ -43,7 +38,6 @@ export function GettingStartedSection() {
         }}
         height={300}
         code={`import { LineChart } from "expo-skia-charts";
-import { View } from "react-native";
 
 const data = [
   { x: 1, y: 10 },
@@ -55,31 +49,27 @@ const data = [
 
 function MyChart() {
   return (
-    <View style={{ height: 300 }}>
-      <LineChart.Chart
-        config={{
-          data: data,
-          hover: {
-            enabled: true,
-            showDot: true,
-            highlightLine: true,
-          },
-          xAxis: { enabled: true },
-          yAxis: { enabled: true },
-        }}
-      />
-    </View>
+    <LineChart.Chart
+      config={{
+        data: data,
+        hover: {
+          enabled: true,
+          showDot: true,
+          highlightLine: true,
+        },
+        xAxis: { enabled: true },
+        yAxis: { enabled: true },
+      }}
+    />
   );
 }`}
       />
-
-      <MarkdownRenderer content={afterQuickStart} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    gap: 16,
   },
 });

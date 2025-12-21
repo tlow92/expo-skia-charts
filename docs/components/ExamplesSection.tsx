@@ -1,5 +1,5 @@
-import React, { useMemo } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { ChartExample } from "./ChartExample";
 
 export function ExamplesSection() {
@@ -8,11 +8,7 @@ export function ExamplesSection() {
     const data = [];
     const now = new Date();
     for (let i = 0; i < 30; i++) {
-      const date = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() - (29 - i)
-      );
+      const date = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (29 - i));
       const value = 50 + Math.sin(i / 5) * 25 + Math.random() * 10;
       data.push({ y: value, x: date.getTime() });
     }
@@ -350,9 +346,7 @@ export function ExamplesSection() {
                       day: "numeric",
                     })}
                   </Text>
-                  <Text
-                    style={{ fontSize: 16, fontWeight: "bold", color: "#000" }}
-                  >
+                  <Text style={{ fontSize: 16, fontWeight: "bold", color: "#000" }}>
                     {dataPoint.y.toFixed(2)}
                   </Text>
                 </View>

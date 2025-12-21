@@ -1,12 +1,12 @@
 // @ts-nocheck - Temporary workaround for reanimated type instantiation depth issue
 import { useState } from "react";
-import { type LayoutChangeEvent, type ViewStyle } from "react-native";
-import Animated, {
-  useAnimatedReaction,
-  runOnJS,
-  type AnimatedStyle,
-} from "react-native-reanimated";
+import type { LayoutChangeEvent, ViewStyle } from "react-native";
 import type { SharedValue } from "react-native-reanimated";
+import Animated, {
+  type AnimatedStyle,
+  runOnJS,
+  useAnimatedReaction,
+} from "react-native-reanimated";
 import { useTooltipPosition } from "../../hooks/useTooltipPosition";
 import type { LineChartDataPoint, TooltipConfig } from "./types";
 
@@ -76,11 +76,7 @@ export function Tooltip({
   }
 
   return (
-    <Animated.View
-      style={animatedStyle}
-      onLayout={onLayout}
-      pointerEvents="none"
-    >
+    <Animated.View style={animatedStyle} onLayout={onLayout} pointerEvents="none">
       {currentDataPoint && config.renderContent(currentDataPoint)}
     </Animated.View>
   );

@@ -1,15 +1,15 @@
-export { LineChart } from "./components/line/LineChart";
 export { DonutChart } from "./components/donut";
+export { LineChart } from "./components/line/LineChart";
 
 // Export types for TypeScript consumers
 export type {
-  LineChartDataPoint,
-  LineChartConfig,
-  LineChartProps,
+  AxisConfig,
   HoverConfig,
   LineChartColors,
-  AxisConfig,
-  TooltipConfig,
+  LineChartConfig,
+  LineChartDataPoint,
+  LineChartProps,
   LineSeriesData,
   MultiLineHoverConfig,
+  TooltipConfig,
 } from "./components/line/types";

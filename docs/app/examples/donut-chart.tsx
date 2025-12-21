@@ -1,7 +1,6 @@
-import { useMemo } from "react";
-import { ScrollView, View, Text, StyleSheet } from "react-native";
 import { DonutChart } from "expo-skia-charts";
-import { ChartExample } from "../../components/ChartExample";
+import { useMemo } from "react";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function DonutChartExamplesScreen() {
   const basicData = useMemo(

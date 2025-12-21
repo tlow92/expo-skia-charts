@@ -1,7 +1,7 @@
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { View, Dimensions, Platform, StyleSheet, ScrollView } from "react-native";
+import { Dimensions, Platform, ScrollView, StyleSheet, View } from "react-native";
 import { Navigation } from "../components/Navigation";
 import "react-native-reanimated";
 
@@ -15,10 +15,13 @@ export default function RootLayout() {
         <ScrollView
           style={{
             flexGrow: 1,
-            maxWidth: 900,
-            marginHorizontal: "auto",
             padding: 24,
             backgroundColor: "#ffffff",
+          }}
+          contentContainerStyle={{
+            maxWidth: 900,
+            width: "100%",
+            alignSelf: "center",
           }}
         >
           <Stack

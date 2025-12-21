@@ -1,9 +1,9 @@
-import {
-  useAnimatedStyle,
-  type SharedValue,
-  type AnimatedStyle,
-} from "react-native-reanimated";
 import type { ViewStyle } from "react-native";
+import {
+  type AnimatedStyle,
+  type SharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 import type { LineChartDataPoint } from "../components/line/types";
 
 interface UseTooltipPositionParams {

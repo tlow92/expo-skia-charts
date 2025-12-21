@@ -41,15 +41,7 @@
           "options": {
             "paths": {
               "tamagui": {
-                "importNames": [
-                  "Text",
-                  "H1",
-                  "H2",
-                  "H3",
-                  "H4",
-                  "Heading",
-                  "Paragraph"
-                ],
+                "importNames": ["Text", "H1", "H2", "H3", "H4", "Heading", "Paragraph"],
                 "message": "Import Text from '@aw/ui' instead of 'tamagui'. Use Text.H1, Text.H2, etc. for headings."
               }
             }

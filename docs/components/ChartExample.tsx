@@ -1,7 +1,6 @@
-import React, { useMemo } from "react";
-import { View, Text, StyleSheet, Platform } from "react-native";
-import { LineChart } from "expo-skia-charts";
 import type { LineChartConfig } from "expo-skia-charts";
+import { LineChart } from "expo-skia-charts";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
@@ -21,12 +20,12 @@ export function ChartExample({
   height = 250,
 }: ChartExampleProps) {
   return (
-    <View style={styles.container}>
+    <View>
       <Text style={styles.title}>{title}</Text>
       {description && <Text style={styles.description}>{description}</Text>}
 
       <View style={styles.chartContainer}>
-        <View style={[styles.chart, { height }]}>
+        <View style={{ height }}>
           <LineChart.Chart config={config} />
         </View>
       </View>
@@ -72,7 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
   },
   chart: {
-    flex: 1,
+    // flex: 1,
   },
   codeContainer: {
     marginTop: 12,

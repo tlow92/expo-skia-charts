@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Line } from "./Line";
-import { calculateUnifiedDomain } from "./utils";
 import type { LineSeriesData } from "./types";
+import { calculateUnifiedDomain } from "./utils";
 
 interface MultiLineProps {
   series: LineSeriesData[];

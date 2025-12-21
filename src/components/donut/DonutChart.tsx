@@ -1,5 +1,3 @@
-import type { LayoutChangeEvent } from "react-native";
-import { Platform, StyleSheet, Text, View } from "react-native";
 import {
   Canvas,
   Paragraph,
@@ -9,6 +7,8 @@ import {
   useFonts,
 } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
+import type { LayoutChangeEvent } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import {
   Gesture,
   GestureDetector,
@@ -245,7 +245,7 @@ export function DonutChart({
     const paragraph = builder.build();
     paragraph.layout(200);
     return paragraph;
-  }, [totalValue]);
+  }, [totalValue, customFontMgr]);
 
   const percentageParagraph = useMemo(() => {
     if (!customFontMgr) return null;
@@ -264,15 +264,17 @@ export function DonutChart({
     const paragraph = builder.build();
     paragraph.layout(100);
     return paragraph;
-  }, []);
+  }, [customFontMgr]);
 
   return (
     <View style={styles.container}>
+      {/* @ts-ignore - style prop exists but type definitions are incomplete */}
       <GestureHandlerRootView style={styles.gestureContainer}>
         <GestureDetector gesture={gesture}>
           <View onLayout={onLayout} style={styles.chartContainer}>
             {size.width > 0 && size.height > 0 && (
               <>
+                {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
                 <Canvas style={{ width: size.width, height: size.height }}>
                   {paths.map((pathData, index) => {
                     const segment = chartData[index];
