@@ -37,7 +37,6 @@ Continue exploring the documentation to learn about:
 - **Installation** - Detailed setup instructions
 - **API Reference** - Complete API documentation
 - **Examples** - Interactive chart examples
-- **Guides** - Advanced usage and customization
 `;
 
 export const id = "getting-started";

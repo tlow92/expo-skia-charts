@@ -12,31 +12,18 @@ export default function RootLayout() {
     <ThemeProvider value={DefaultTheme}>
       <View style={styles.container}>
         {isDesktop && <Navigation />}
-        <ScrollView
-          style={{
-            flexGrow: 1,
-            padding: 24,
-            backgroundColor: "#ffffff",
-          }}
-          contentContainerStyle={{
-            maxWidth: 900,
-            width: "100%",
-            alignSelf: "center",
+
+        <Stack
+          screenOptions={{
+            headerShown: false,
           }}
         >
-          <Stack
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="getting-started" />
-            <Stack.Screen name="installation" />
-            <Stack.Screen name="api-reference" />
-            <Stack.Screen name="examples" />
-            <Stack.Screen name="guides" />
-          </Stack>
-        </ScrollView>
+          <Stack.Screen name="index" />
+          <Stack.Screen name="getting-started" />
+          <Stack.Screen name="installation" />
+          <Stack.Screen name="api-reference" />
+          <Stack.Screen name="examples" />
+        </Stack>
       </View>
       <StatusBar style="auto" />
     </ThemeProvider>

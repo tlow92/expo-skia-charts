@@ -21,7 +21,6 @@ const navItems: NavItem[] = [
       { title: "DonutChart", href: "/examples/donut-chart" },
     ],
   },
-  { title: "Guides", href: "/guides" },
 ];
 
 export const Navigation = React.memo(function Navigation() {

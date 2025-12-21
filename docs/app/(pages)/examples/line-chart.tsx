@@ -1,4 +1,4 @@
-import { ExamplesSection } from "../../components/ExamplesSection";
+import { ExamplesSection } from "../../../components/ExamplesSection";
 
 export default function LineChartExamplesScreen() {
   return <ExamplesSection />;
