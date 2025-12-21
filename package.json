@@ -34,6 +34,11 @@
   "scripts": {
     "example": "yarn workspace expo-skia-charts-example",
     "docs": "yarn workspace expo-skia-charts-docs",
+    "docs:start": "yarn workspace expo-skia-charts-docs start",
+    "docs:web": "yarn workspace expo-skia-charts-docs web",
+    "docs:export": "yarn workspace expo-skia-charts-docs web:export",
+    "docs:serve": "yarn workspace expo-skia-charts-docs web:serve",
+    "docs:deploy": "yarn workspace expo-skia-charts-docs deploy",
     "clean": "del-cli lib",
     "prepare": "bob build",
     "typecheck": "tsc",

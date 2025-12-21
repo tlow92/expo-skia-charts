@@ -7,10 +7,14 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "web:export": "expo export -p web"
+    "web:export": "expo export -p web",
+    "web:serve": "npx serve dist",
+    "deploy": "expo export -p web && gh-pages -d dist"
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.3",
+    "@mdx-js/mdx": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
     "@react-navigation/bottom-tabs": "^7.4.0",
     "@react-navigation/elements": "^2.6.3",
     "@react-navigation/native": "^7.1.8",
@@ -35,9 +39,12 @@
     "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
     "react-native-web": "~0.21.0",
-    "react-native-worklets": "0.5.1"
+    "react-native-worklets": "0.5.1",
+    "react-syntax-highlighter": "^16.1.0"
   },
   "devDependencies": {
+    "@types/gh-pages": "^6",
+    "gh-pages": "^6.3.0",
     "react-native-builder-bob": "^0.40.17",
     "react-native-monorepo-config": "^0.3.1"
   },

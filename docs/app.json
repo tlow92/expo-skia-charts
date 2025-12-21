@@ -23,8 +23,10 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "single",
-      "favicon": "./assets/images/favicon.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png",
+      "publicPath": "/expo-skia-charts/"
     },
     "plugins": [
       "expo-router",

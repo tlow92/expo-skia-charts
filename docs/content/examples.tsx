@@ -1,0 +1,90 @@
+export const content = `
+# Examples
+
+Explore interactive chart examples showcasing different features and use cases.
+
+## Basic Charts
+
+### Simple Line Chart
+
+The most basic line chart with minimal configuration showing a single data series.
+
+### Sparse Data
+
+Charts work well with sparse data points, automatically connecting them with smooth lines.
+
+## Time Series
+
+### Daily Data
+
+Display time-based data with formatted dates on the x-axis. Perfect for showing trends over days, weeks, or months.
+
+### Hourly Data
+
+Fine-grained time series with hourly intervals, ideal for intraday data visualization.
+
+## Interactive Charts
+
+### Full Interactive Chart
+
+Chart with all interactive features enabled:
+- Hover dot showing exact data point
+- Vertical highlight line following cursor
+- Custom tooltip with formatted data
+- Smooth animations
+
+### Smooth Follow Tooltip
+
+Tooltip that smoothly follows cursor without snapping to data points, providing fluid interaction.
+
+## Styled Charts
+
+### Dark Theme
+
+Chart styled for dark backgrounds with adjusted colors for better visibility.
+
+### Accent Colors
+
+Chart with custom brand accent colors, demonstrating full styling flexibility.
+
+## Multiple Series
+
+### Two Lines
+
+Comparing two data series on the same chart with different colors.
+
+### Three Lines
+
+Multiple series comparison showing revenue, expenses, and profit over time.
+
+## Mathematical Functions
+
+### Sine Wave
+
+Smooth sine wave visualization with many data points.
+
+### Combined Functions
+
+Multiple mathematical functions combined (sine + cosine) for complex patterns.
+
+## Real-World Use Cases
+
+### Stock Price
+
+Simulated stock price chart with:
+- Time-based x-axis
+- Custom tooltip showing price and date
+- Grid lines for reference
+- Professional styling
+
+### Temperature
+
+Temperature data over 24 hours:
+- Hourly intervals
+- Custom color scheme (red/orange)
+- Formatted labels with degree symbol
+- Smooth curve showing temperature changes
+`;
+
+export const id = "examples";
+export const title = "Examples";
