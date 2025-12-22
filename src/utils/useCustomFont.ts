@@ -5,8 +5,8 @@ export function useRobotoFontManager() {
   const customFontMgr = useFonts({
     Roboto: [
       Platform.OS === "web"
-        ? { default: require("../../assets/Roboto-Regular.ttf") }
-        : require("../../assets/Roboto-Regular.ttf"),
+        ? { default: require("../assets/Roboto-Regular.ttf") }
+        : require("../assets/Roboto-Regular.ttf"),
     ],
   });
   return customFontMgr;
