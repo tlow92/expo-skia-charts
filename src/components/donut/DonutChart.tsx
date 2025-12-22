@@ -256,84 +256,79 @@ export function DonutChart({
   }, [robotoFont]);
 
   return (
-    <View style={styles.container}>
-      {/* @ts-ignore - style prop exists but type definitions are incomplete */}
-      <GestureHandlerRootView style={styles.gestureContainer}>
-        <GestureDetector gesture={gesture}>
-          <View onLayout={onLayout} style={styles.chartContainer}>
-            {size.width > 0 && size.height > 0 && (
-              <>
-                {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
-                <Canvas style={{ width: size.width, height: size.height }}>
-                  {paths.map((pathData, index) => {
-                    const segment = chartData[index];
-                    if (!segment) {
-                      return null;
-                    }
+    <View onLayout={onLayout} style={{ flex: 1 }}>
+      {size.width > 0 && size.height > 0 && (
+        <>
+          <GestureDetector gesture={gesture}>
+            {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
+            <Canvas style={{ width: size.width, height: size.height }}>
+              {paths.map((pathData, index) => {
+                const segment = chartData[index];
+                if (!segment) {
+                  return null;
+                }
 
-                    return (
-                      <Path
-                        key={index}
-                        path={pathData.path}
-                        style="stroke"
-                        color={pathData.color}
-                        strokeWidth={strokeWidth}
-                        strokeCap="butt"
-                        end={animationProgress}
-                      />
-                    );
-                  })}
+                return (
+                  <Path
+                    key={index}
+                    path={pathData.path}
+                    style="stroke"
+                    color={pathData.color}
+                    strokeWidth={strokeWidth}
+                    strokeCap="butt"
+                    end={animationProgress}
+                  />
+                );
+              })}
 
-                  {showCenterValue && centerValueParagraph && percentageParagraph && (
-                    <>
-                      <Paragraph
-                        paragraph={centerValueParagraph}
-                        x={size.width / 2 - centerValueParagraph.getLongestLine() / 2}
-                        y={size.height / 2 - centerValueParagraph.getHeight() - 5}
-                        width={200}
-                        opacity={animationProgress}
-                      />
-                      <Paragraph
-                        paragraph={percentageParagraph}
-                        x={size.width / 2 - percentageParagraph.getLongestLine() / 2}
-                        y={size.height / 2 + 10}
-                        width={100}
-                        opacity={animationProgress}
-                      />
-                    </>
-                  )}
-                </Canvas>
+              {showCenterValue && centerValueParagraph && percentageParagraph && (
+                <>
+                  <Paragraph
+                    paragraph={centerValueParagraph}
+                    x={size.width / 2 - centerValueParagraph.getLongestLine() / 2}
+                    y={size.height / 2 - centerValueParagraph.getHeight() - 5}
+                    width={200}
+                    opacity={animationProgress}
+                  />
+                  <Paragraph
+                    paragraph={percentageParagraph}
+                    x={size.width / 2 - percentageParagraph.getLongestLine() / 2}
+                    y={size.height / 2 + 10}
+                    width={100}
+                    opacity={animationProgress}
+                  />
+                </>
+              )}
+            </Canvas>
+          </GestureDetector>
 
-                {showLabels && (
-                  <View style={styles.legendContainer}>
-                    {chartData.map((segment, index) => (
-                      <View key={index} style={styles.legendItem}>
-                        <View
-                          style={[styles.legendColor, { backgroundColor: segment.color }]}
-                        />
-                        <Text style={styles.legendText}>{segment.label}</Text>
-                      </View>
-                    ))}
-                  </View>
-                )}
-              </>
-            )}
-          </View>
-        </GestureDetector>
-      </GestureHandlerRootView>
+          {showLabels && (
+            <View style={styles.legendContainer}>
+              {chartData.map((segment, index) => (
+                <View key={index} style={styles.legendItem}>
+                  <View
+                    style={[styles.legendColor, { backgroundColor: segment.color }]}
+                  />
+                  <Text style={styles.legendText}>{segment.label}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
   },
   gestureContainer: {
-    flex: 1,
+    flexGrow: 1,
   },
   chartContainer: {
-    flex: 1,
+    flexGrow: 1,
     flexDirection: "row",
     alignItems: "center",
   },
