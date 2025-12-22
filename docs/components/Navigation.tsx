@@ -42,7 +42,7 @@ export const Navigation = React.memo(function Navigation() {
   };
 
   const handleGitHubPress = () => {
-    Linking.openURL("https://github.com/tlr-software/expo-skia-charts");
+    Linking.openURL("https://github.com/tlow92/expo-skia-charts");
   };
 
   return (
