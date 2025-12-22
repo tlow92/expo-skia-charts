@@ -46,6 +46,7 @@ yarn clean              # Clean build artifacts
 ```bash
 yarn typecheck          # Run TypeScript compiler
 yarn test               # Run Jest tests
+yarn biome
 ```
 
 ### Example App
@@ -90,6 +91,7 @@ yarn release            # Run release-it for versioning and publishing
 ### Code Quality
 
 - **Linting**: Uses Biome for linting and formatting
+  - Always just run `yarn biome` in the root to format and lint
   - Line width: 90 characters
   - 2-space indentation
   - Double quotes for JSX, ES5 trailing commas
@@ -168,21 +170,6 @@ src/
     pchip.ts               # Interpolation algorithms
   assets/
     Roboto-Regular.ttf     # Fonts for text rendering
-```
-
-**Export Pattern:**
-Charts are exported as namespaces for clean API:
-
-```typescript
-// In src/components/line/LineChart.tsx
-export const LineChart = {
-  Chart,
-  Line,
-};
-
-// Usage in consumer code
-import { LineChart } from "expo-skia-charts";
-<LineChart config={...} />
 ```
 
 ## Chart Component Development Patterns

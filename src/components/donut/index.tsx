@@ -1,1 +1,10 @@
-export { DonutChart, type DonutChartDataPoint, type DonutChartProps } from "./DonutChart";
+export { DonutChart } from "./DonutChart";
+export type {
+  CenterValuesConfig,
+  DonutChartConfig,
+  DonutChartDataPoint,
+  DonutChartProps,
+  HoverConfig,
+  LegendConfig,
+  ProcessedSegment,
+} from "./types";
