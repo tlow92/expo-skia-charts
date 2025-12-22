@@ -18,7 +18,7 @@ export default function HomeScreen() {
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ padding: 16 }}>
       <Text style={{ fontSize: 24, marginBottom: 8 }}>Default</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
           }}
@@ -27,7 +27,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>With hover dot</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -40,7 +40,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>With highlighted Line</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -54,7 +54,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>With X and Y Axes</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             xAxis: {
@@ -74,7 +74,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>With Grid Lines</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             xAxis: {
@@ -96,7 +96,7 @@ export default function HomeScreen() {
         With Axes, Grid Lines, and Hover
       </Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -119,7 +119,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>Custom styled with axes</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -158,7 +158,7 @@ export default function HomeScreen() {
         With Custom Tooltip (Snap to Point)
       </Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -211,7 +211,7 @@ export default function HomeScreen() {
         With Smooth Follow Tooltip (No Snap)
       </Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             data: chartData,
             hover: {
@@ -255,7 +255,7 @@ export default function HomeScreen() {
 
       <Text style={{ fontSize: 24, marginBottom: 8 }}>Multiple Lines</Text>
       <View style={{ height: 200, marginBottom: 24 }}>
-        <LineChart.Chart
+        <LineChart
           config={{
             series: [
               {

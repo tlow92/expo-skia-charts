@@ -1,14 +1,7 @@
-import {
-  Group,
-  Line,
-  Paragraph,
-  Skia,
-  TextAlign,
-  useFonts,
-} from "@shopify/react-native-skia";
+import { Group, Line, Paragraph, Skia, TextAlign } from "@shopify/react-native-skia";
 import { useMemo } from "react";
-import { Platform } from "react-native";
 import { calculateXAxis } from "../../utils/axisCalculations";
+import { useRobotoFontManager } from "../../utils/useCustomFont";
 import type { AxisConfig, LineChartDataPoint } from "./types";
 
 type XAxisProps = {
@@ -30,13 +23,7 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
     isTimeData = false,
   } = config ?? {};
 
-  const customFontMgr = useFonts({
-    Roboto: [
-      Platform.OS === "web"
-        ? { default: require("../../assets/Roboto-Regular.ttf") }
-        : require("../../assets/Roboto-Regular.ttf"),
-    ],
-  });
+  const robotoFont = useRobotoFontManager();
 
   const axisData = useMemo(
     () => calculateXAxis(data, width, tickCount, formatter, isTimeData),
@@ -74,7 +61,7 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
           labelX = tick.position;
         }
 
-        if (customFontMgr) {
+        if (robotoFont) {
           try {
             const paragraphStyle = {
               textAlign,
@@ -84,7 +71,7 @@ export function XAxis({ data, width, height, config }: XAxisProps) {
               fontSize,
             };
 
-            const builder = Skia.ParagraphBuilder.Make(paragraphStyle, customFontMgr);
+            const builder = Skia.ParagraphBuilder.Make(paragraphStyle, robotoFont);
             builder.pushStyle(textStyle);
             builder.addText(tick.label);
             builder.pop();

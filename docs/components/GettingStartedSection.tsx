@@ -58,7 +58,7 @@ const data = [
 
 function MyChart() {
   return (
-    <LineChart.Chart
+    <LineChart
       config={{
         data: data,
         hover: {

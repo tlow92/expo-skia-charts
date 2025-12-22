@@ -32,7 +32,7 @@ export function ExamplesSection() {
           data: chartData,
         }}
         height={250}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
   }}
@@ -50,7 +50,7 @@ export function ExamplesSection() {
           },
         }}
         height={250}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     hover: {
@@ -73,7 +73,7 @@ export function ExamplesSection() {
           },
         }}
         height={250}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     hover: {
@@ -101,7 +101,7 @@ export function ExamplesSection() {
           },
         }}
         height={250}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     xAxis: {
@@ -133,7 +133,7 @@ export function ExamplesSection() {
           },
         }}
         height={250}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     xAxis: {
@@ -182,7 +182,7 @@ export function ExamplesSection() {
           },
         }}
         height={300}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     hover: {
@@ -272,7 +272,7 @@ export function ExamplesSection() {
           },
         }}
         height={300}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     series: [
       {
@@ -365,7 +365,7 @@ export function ExamplesSection() {
           },
         }}
         height={300}
-        code={`<LineChart.Chart
+        code={`<LineChart
   config={{
     data: chartData,
     hover: {

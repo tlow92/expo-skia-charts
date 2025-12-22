@@ -5,12 +5,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Project Overview
 
 `expo-skia-charts` is a React Native library providing performant charts for iOS, Android, and Web using Skia graphics. The project is structured as a Yarn monorepo with:
+
 - Library source in `src/` (TypeScript)
 - Example app in `example/` (Expo Router-based React Native app)
 
 ## Dependencies
 
 The library requires these peer dependencies:
+
 - `@shopify/react-native-skia` - for Skia-based rendering
 - `react-native-reanimated` - for smooth animations
 - `react-native-worklets` - for high-performance JavaScript execution
@@ -21,28 +23,33 @@ Note: `react-native-skia` requires react-native@>=0.79 and react@>=19. For web s
 ## Development Commands
 
 ### Setup
+
 ```bash
 yarn                    # Install dependencies (must use Yarn due to workspaces)
 ```
 
 ### Building
+
 ```bash
 yarn prepare            # Build library using react-native-builder-bob
 yarn clean              # Clean build artifacts
 ```
 
 **IMPORTANT**: Do NOT run `yarn prepare` after every change. The example app uses the local source directly via workspace resolution, so changes are picked up immediately without building. Only run `yarn prepare` when:
+
 - Preparing for publishing
 - Testing the built output specifically
 - Explicitly requested by the developer
 
 ### Type Checking and Testing
+
 ```bash
 yarn typecheck          # Run TypeScript compiler
 yarn test               # Run Jest tests
 ```
 
 ### Example App
+
 ```bash
 yarn example start      # Start Metro bundler
 yarn example android    # Run on Android
@@ -52,6 +59,7 @@ yarn example lint       # Lint example app
 ```
 
 ### Publishing
+
 ```bash
 yarn release            # Run release-it for versioning and publishing
 ```
@@ -59,6 +67,7 @@ yarn release            # Run release-it for versioning and publishing
 ## Architecture
 
 ### Build Configuration
+
 - Built with `react-native-builder-bob` targeting:
   - ESM modules output to `lib/module/`
   - TypeScript declarations output to `lib/typescript/`
@@ -66,17 +75,20 @@ yarn release            # Run release-it for versioning and publishing
 - TypeScript configured with strict mode and extensive compiler checks
 
 ### Monorepo Structure
+
 - Root `package.json` manages library package
 - `example/` workspace contains Expo-based demo app
 - Example app uses local library source via workspace resolution
 
 ### Example App Architecture
+
 - Built with Expo SDK ~54
 - Uses Expo Router for file-based routing
 - Tab-based navigation in `app/(tabs)/`
 - Currently demonstrates basic Skia canvas rendering
 
 ### Code Quality
+
 - **Linting**: Uses Biome for linting and formatting
   - Line width: 90 characters
   - 2-space indentation
@@ -92,18 +104,18 @@ yarn release            # Run release-it for versioning and publishing
 When rendering text with react-native-skia, use the **Paragraph API** with `useFonts` for cross-platform compatibility (iOS, Android, and Web). DO NOT use `matchFont` or `Text` component directly as they don't work on Web.
 
 **Correct approach:**
+
 ```typescript
-import { Paragraph, Skia, TextAlign, useFonts } from "@shopify/react-native-skia";
+import {
+  Paragraph,
+  Skia,
+  TextAlign,
+  useFonts,
+} from "@shopify/react-native-skia";
 import { Platform } from "react-native";
 
 // Load fonts with platform-specific format for web
-const customFontMgr = useFonts({
-  Roboto: [
-    Platform.OS === "web"
-      ? { default: require("../../assets/Roboto-Regular.ttf") }
-      : require("../../assets/Roboto-Regular.ttf"),
-  ],
-});
+const robotoFont = useRobotoFontManager();
 
 // Build paragraph
 const paragraphStyle = { textAlign: TextAlign.Center };
@@ -112,7 +124,7 @@ const textStyle = {
   fontSize: 12,
 };
 
-const builder = Skia.ParagraphBuilder.Make(paragraphStyle, customFontMgr);
+const builder = Skia.ParagraphBuilder.Make(paragraphStyle, robotoFont);
 builder.pushStyle(textStyle);
 builder.addText("Label text");
 builder.pop();
@@ -120,14 +132,15 @@ const paragraph = builder.build();
 paragraph.layout(100); // width
 
 // Render
-<Paragraph paragraph={paragraph} x={0} y={0} width={100} />
+<Paragraph paragraph={paragraph} x={0} y={0} width={100} />;
 ```
 
 **Key points:**
+
 - Font files are in `src/assets/` (currently: `Roboto-Regular.ttf`)
 - Web requires `{ default: require(...) }` format, native platforms use `require(...)` directly
 - Always wrap paragraph building in try-catch for graceful degradation
-- Check if `customFontMgr` is loaded before building paragraphs
+- Check if `robotoFont` is loaded before building paragraphs
 - Call `paragraph.layout(width)` before rendering
 
 ## File Organization
@@ -159,6 +172,7 @@ src/
 
 **Export Pattern:**
 Charts are exported as namespaces for clean API:
+
 ```typescript
 // In src/components/line/LineChart.tsx
 export const LineChart = {
@@ -168,7 +182,7 @@ export const LineChart = {
 
 // Usage in consumer code
 import { LineChart } from "expo-skia-charts";
-<LineChart.Chart config={...} />
+<LineChart config={...} />
 ```
 
 ## Chart Component Development Patterns
@@ -178,6 +192,7 @@ import { LineChart } from "expo-skia-charts";
 Every chart follows this component architecture:
 
 **Main Chart Component** (`Chart.tsx`):
+
 - Handles canvas sizing with `onLayout`
 - Creates SharedValues for interaction (`useSharedValue`)
 - Sets up gesture handlers (`GestureDetector`)
@@ -185,6 +200,7 @@ Every chart follows this component architecture:
 - Example: `src/components/line/Chart.tsx`
 
 **Rendering Component** (e.g., `Line.tsx`):
+
 - Uses Skia primitives (`Path`, `Circle`, `Group`, etc.)
 - Accesses context via custom hook (`useLineChartContext`)
 - Transforms data to visual elements
@@ -237,8 +253,12 @@ const gesture = useMemo(() => {
   const pan = Gesture.Pan()
     .activateAfterLongPress(1)
     .enabled(enabled)
-    .onStart((pos) => { /* ... */ })
-    .onChange((pos) => { /* ... */ });
+    .onStart((pos) => {
+      /* ... */
+    })
+    .onChange((pos) => {
+      /* ... */
+    });
 
   return Gesture.Race(hover, pan); // Race to handle both
 }, [enabled, x, y, offset]);
@@ -254,13 +274,13 @@ import { extent } from "d3-array";
 
 // ✅ CORRECT: Use D3 for calculations
 const xScale = scaleLinear()
-  .domain(extent(data.map(d => d.x)))
+  .domain(extent(data.map((d) => d.x)))
   .range([0, width]);
 
 const ticks = xScale.ticks(5);
 
 // ✅ CORRECT: Render with Skia
-ticks.map(tick => (
+ticks.map((tick) => (
   <Line
     p1={{ x: xScale(tick), y: 0 }}
     p2={{ x: xScale(tick), y: height }}
@@ -291,13 +311,14 @@ Example: `src/components/line/utils.ts:buildLine()`
 ### Worklet Functions
 
 Mark functions with `"worklet"` directive when they:
+
 - Perform mathematical calculations used in animations
 - Are called from `useDerivedValue` or `useAnimatedStyle`
 - Need to run on the UI thread with react-native-reanimated
 
 ```typescript
 export const cubicBezierYForX = (x: number, a: Vector, b: Vector) => {
-  "worklet";  // Required for UI thread execution
+  "worklet"; // Required for UI thread execution
   // ... math calculations
 };
 ```
@@ -307,6 +328,7 @@ All functions in `src/utils/math.ts` follow this pattern.
 ### Optimization Patterns
 
 - **useMemo**: For expensive calculations that don't need reactive updates
+
   ```typescript
   const { path } = useMemo(
     () => buildLine(data, width, height),
@@ -315,6 +337,7 @@ All functions in `src/utils/math.ts` follow this pattern.
   ```
 
 - **useDerivedValue**: For reactive computations based on SharedValues
+
   ```typescript
   const cy = useDerivedValue(() => {
     return getYForX(path.toCmds(), x.value);
@@ -330,6 +353,7 @@ All functions in `src/utils/math.ts` follow this pattern.
 ## TypeScript Configuration
 
 The project uses strict TypeScript settings:
+
 - `noUncheckedIndexedAccess: true` - array/object access returns `T | undefined`
 - `noUnusedLocals: true` and `noUnusedParameters: true` - enforce cleanup
 - `noImplicitReturns: true` - all code paths must return
@@ -338,6 +362,7 @@ The project uses strict TypeScript settings:
 ## Testing
 
 Jest configured with:
+
 - React Native preset
 - Ignores `example/node_modules` and `lib/`
 - Test files in `src/__tests__/`

@@ -1,14 +1,7 @@
-import {
-  Group,
-  Line,
-  Paragraph,
-  Skia,
-  TextAlign,
-  useFonts,
-} from "@shopify/react-native-skia";
+import { Group, Line, Paragraph, Skia, TextAlign } from "@shopify/react-native-skia";
 import { useMemo } from "react";
-import { Platform } from "react-native";
 import { calculateYAxis } from "../../utils/axisCalculations";
+import { useRobotoFontManager } from "../../utils/useCustomFont";
 import type { AxisConfig, LineChartDataPoint } from "./types";
 
 type YAxisProps = {
@@ -29,13 +22,7 @@ export function YAxis({ data, width, height, config }: YAxisProps) {
     gridLineColor = "#e0e0e0",
   } = config ?? {};
 
-  const customFontMgr = useFonts({
-    Roboto: [
-      Platform.OS === "web"
-        ? { default: require("../../assets/Roboto-Regular.ttf") }
-        : require("../../assets/Roboto-Regular.ttf"),
-    ],
-  });
+  const robotoFont = useRobotoFontManager();
 
   const axisData = useMemo(
     () => calculateYAxis(data, height, tickCount, formatter),
@@ -52,7 +39,7 @@ export function YAxis({ data, width, height, config }: YAxisProps) {
       {axisData.ticks.map((tick) => {
         let paragraph = null;
 
-        if (customFontMgr) {
+        if (robotoFont) {
           try {
             const paragraphStyle = {
               textAlign: TextAlign.Right,
@@ -62,7 +49,7 @@ export function YAxis({ data, width, height, config }: YAxisProps) {
               fontSize,
             };
 
-            const builder = Skia.ParagraphBuilder.Make(paragraphStyle, customFontMgr);
+            const builder = Skia.ParagraphBuilder.Make(paragraphStyle, robotoFont);
             builder.pushStyle(textStyle);
             builder.addText(tick.label);
             builder.pop();

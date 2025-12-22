@@ -1,20 +1,14 @@
-import {
-  Canvas,
-  Paragraph,
-  Path,
-  Skia,
-  TextAlign,
-  useFonts,
-} from "@shopify/react-native-skia";
+import { Canvas, Paragraph, Path, Skia, TextAlign } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import {
   Gesture,
   GestureDetector,
   GestureHandlerRootView,
 } from "react-native-gesture-handler";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import { useRobotoFontManager } from "../../utils/useCustomFont";
 
 export type DonutChartDataPoint = {
   label: string;
@@ -49,13 +43,8 @@ export function DonutChart({
 }: DonutChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const customFontMgr = useFonts({
-    Roboto: [
-      Platform.OS === "web"
-        ? { default: require("../../assets/Roboto-Regular.ttf") }
-        : require("../../assets/Roboto-Regular.ttf"),
-    ],
-  });
+  const robotoFont = useRobotoFontManager();
+
   // Animation values
   const animationProgress = useSharedValue(0);
 
@@ -226,7 +215,7 @@ export function DonutChart({
 
   // Create paragraphs for center text
   const centerValueParagraph = useMemo(() => {
-    if (!customFontMgr) return null;
+    if (!robotoFont) return null;
     const paragraphStyle = {
       textAlign: TextAlign.Center,
     };
@@ -238,17 +227,17 @@ export function DonutChart({
       },
     };
 
-    const builder = Skia.ParagraphBuilder.Make(paragraphStyle, customFontMgr);
+    const builder = Skia.ParagraphBuilder.Make(paragraphStyle, robotoFont);
     builder.pushStyle(textStyle);
     builder.addText(totalValue.toLocaleString());
     builder.pop();
     const paragraph = builder.build();
     paragraph.layout(200);
     return paragraph;
-  }, [totalValue, customFontMgr]);
+  }, [totalValue, robotoFont]);
 
   const percentageParagraph = useMemo(() => {
-    if (!customFontMgr) return null;
+    if (!robotoFont) return null;
     const paragraphStyle = {
       textAlign: TextAlign.Center,
     };
@@ -257,14 +246,14 @@ export function DonutChart({
       fontSize: 14,
     };
 
-    const builder = Skia.ParagraphBuilder.Make(paragraphStyle, customFontMgr);
+    const builder = Skia.ParagraphBuilder.Make(paragraphStyle, robotoFont);
     builder.pushStyle(textStyle);
     builder.addText("▲ 6%");
     builder.pop();
     const paragraph = builder.build();
     paragraph.layout(100);
     return paragraph;
-  }, [customFontMgr]);
+  }, [robotoFont]);
 
   return (
     <View style={styles.container}>

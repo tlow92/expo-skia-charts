@@ -1,11 +1,7 @@
 import { StyleSheet, Text } from "react-native";
 
 export default function DonutChartExamplesScreen() {
-  return (
-    <>
-      <Text style={styles.h1}>DonutChart Examples</Text>
-    </>
-  );
+  return <Text style={styles.h1}>DonutChart Examples</Text>;
 }
 
 const styles = StyleSheet.create({

@@ -25,7 +25,7 @@ export function ChartExample({
 
       <View style={styles.chartContainer}>
         <View style={{ height }}>
-          <LineChart.Chart config={config} />
+          <LineChart config={config} />
         </View>
       </View>
 
