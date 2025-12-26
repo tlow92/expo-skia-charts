@@ -75,8 +75,9 @@ export const useDonutTouchHandler = (
       });
 
     const pan = Gesture.Pan()
-      .activateAfterLongPress(1)
       .enabled(enabled)
+      .minDistance(0)
+      .shouldCancelWhenOutside(false)
       .onStart((e) => {
         handleTouch(e.x, e.y);
       })

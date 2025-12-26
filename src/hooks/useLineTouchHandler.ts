@@ -31,8 +31,9 @@ export const useLineTouchHandler = (
         }
       });
     const pan = Gesture.Pan()
-      .activateAfterLongPress(1)
       .enabled(enabled)
+      .minDistance(0)
+      .shouldCancelWhenOutside(false)
       .onStart((pos) => {
         x.value = pos.x - offsetX;
         y.value = pos.y - offsetY;
