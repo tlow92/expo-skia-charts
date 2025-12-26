@@ -30,9 +30,7 @@ const DEFAULT_COLORS = [
 export function DonutChart({ config }: DonutChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [legendHeight, setLegendHeight] = useState(0);
-  const [hoveredSegmentIndex, setHoveredSegmentIndex] = useState<number | null>(
-    null
-  );
+  const [hoveredSegmentIndex, setHoveredSegmentIndex] = useState<number | null>(null);
   const hoveredIndex = useSharedValue<number | null>(null);
 
   const colors = config.colors ?? DEFAULT_COLORS;
@@ -152,8 +150,7 @@ export function DonutChart({ config }: DonutChartProps) {
 
   // Get hovered segment for custom center content
   const hoveredSegment = useMemo(() => {
-    if (hoveredSegmentIndex === null || hoveredSegmentIndex === undefined)
-      return null;
+    if (hoveredSegmentIndex === null || hoveredSegmentIndex === undefined) return null;
     return chartData[hoveredSegmentIndex] ?? null;
   }, [chartData, hoveredSegmentIndex]);
 
@@ -173,27 +170,22 @@ export function DonutChart({ config }: DonutChartProps) {
             </GestureDetector>
 
             {/* Custom center values rendered as positioned View */}
-            {config.centerValues?.enabled &&
-              config.centerValues.renderContent && (
-                <View
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: size.width,
-                    height: canvasHeight,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    pointerEvents: "none",
-                  }}
-                >
-                  {config.centerValues.renderContent(
-                    chartData,
-                    totalValue,
-                    hoveredSegment
-                  )}
-                </View>
-              )}
+            {config.centerValues?.enabled && config.centerValues.renderContent && (
+              <View
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: size.width,
+                  height: canvasHeight,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  pointerEvents: "none",
+                }}
+              >
+                {config.centerValues.renderContent(chartData, totalValue, hoveredSegment)}
+              </View>
+            )}
           </View>
 
           <View onLayout={(e) => setLegendHeight(e.nativeEvent.layout.height)}>

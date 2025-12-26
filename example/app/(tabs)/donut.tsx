@@ -1,14 +1,7 @@
 import { DonutChart } from "expo-skia-charts";
 import type { PropsWithChildren } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import Animated, {
-  Easing,
-  FadeInDown,
-  FadeInUp,
-  FadeOutUp,
-  ZoomIn,
-  ZoomOut,
-} from "react-native-reanimated";
+import Animated, { Easing, FadeInDown, FadeOutUp } from "react-native-reanimated";
 
 export default function TabTwoScreen() {
   const data = [
