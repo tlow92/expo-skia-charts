@@ -173,6 +173,15 @@ export function ExamplesSection() {
             color: "#3E63DD",
             gridLineColor: "#E0E7FF",
             tickCount: 6,
+            formatter: (value) => {
+              const dateObj = new Date(value);
+              const date = Intl.DateTimeFormat(
+                "en-US",
+                dateObj.getDate() === 1 ? { month: "short" } : { day: "2-digit" }
+              ).format(dateObj);
+
+              return date;
+            },
           },
           yAxis: {
             enabled: true,

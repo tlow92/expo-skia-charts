@@ -12,6 +12,24 @@ export type LineChartDataPoint = {
   y: number;
 };
 
+export type XAxisConfig = AxisConfig & {
+  /**
+   * Number of ticks to display on the axis (approximate).
+   * The actual number may vary based on D3's tick algorithm.
+   * @default 2
+   */
+  tickCount?: number;
+};
+
+export type YAxisConfig = AxisConfig & {
+  /**
+   * Number of ticks to display on the axis (approximate).
+   * The actual number may vary based on D3's tick algorithm.
+   * @default 5
+   */
+  tickCount?: number;
+};
+
 /**
  * Configuration for chart axis rendering and behavior.
  */
@@ -21,12 +39,6 @@ export type AxisConfig = {
    * @default false
    */
   enabled?: boolean;
-  /**
-   * Number of ticks to display on the axis (approximate).
-   * The actual number may vary based on D3's tick algorithm.
-   * @default 5
-   */
-  tickCount?: number;
   /**
    * Custom formatter function for axis tick labels.
    * If not provided, uses default formatters (time-based or numeric).
@@ -252,12 +264,12 @@ export type LineChartConfig = {
    * Configuration for the X-axis.
    * If not provided, no X-axis is rendered.
    */
-  xAxis?: AxisConfig;
+  xAxis?: XAxisConfig;
   /**
    * Configuration for the Y-axis.
    * If not provided, no Y-axis is rendered.
    */
-  yAxis?: AxisConfig;
+  yAxis?: YAxisConfig;
 };
 
 /**

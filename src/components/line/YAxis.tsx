@@ -2,19 +2,19 @@ import { Group, Line, Paragraph, Skia, TextAlign } from "@shopify/react-native-s
 import { useMemo } from "react";
 import { calculateYAxis } from "../../utils/axisCalculations";
 import { useRobotoFontManager } from "../../utils/useCustomFont";
-import type { AxisConfig, LineChartDataPoint } from "./types";
+import type { LineChartDataPoint, YAxisConfig } from "./types";
 
 type YAxisProps = {
   data: LineChartDataPoint[];
   width: number;
   height: number;
-  config?: AxisConfig;
+  config?: YAxisConfig;
 };
 
 export function YAxis({ data, width, height, config }: YAxisProps) {
   const {
     enabled = true,
-    tickCount = 2,
+    tickCount = 5,
     formatter,
     fontSize = 12,
     color = "#666",

@@ -2,13 +2,13 @@ import { Group, Line, Paragraph, Skia, TextAlign } from "@shopify/react-native-s
 import { useMemo } from "react";
 import { calculateXAxis } from "../../utils/axisCalculations";
 import { useRobotoFontManager } from "../../utils/useCustomFont";
-import type { AxisConfig, LineChartDataPoint } from "./types";
+import type { LineChartDataPoint, XAxisConfig } from "./types";
 
 type XAxisProps = {
   data: LineChartDataPoint[];
   width: number;
   height: number;
-  config?: AxisConfig;
+  config?: XAxisConfig;
 };
 
 export function XAxis({ data, width, height, config }: XAxisProps) {
