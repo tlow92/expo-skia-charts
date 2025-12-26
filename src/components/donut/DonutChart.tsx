@@ -2,7 +2,7 @@ import { Canvas } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { View } from "react-native";
-import { GestureDetector } from "react-native-gesture-handler";
+import { GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import {
   Easing,
   runOnJS,
@@ -155,46 +155,52 @@ export function DonutChart({ config }: DonutChartProps) {
   }, [chartData, hoveredSegmentIndex]);
 
   return (
-    <View onLayout={onLayout} style={{ flex: 1 }}>
-      {size.width > 0 && size.height > 0 && (
-        <>
-          <View style={{ position: "relative" }}>
-            <GestureDetector gesture={gesture}>
-              {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
-              <Canvas style={{ width: size.width, height: canvasHeight }}>
-                <DonutChartContextProvider value={context}>
-                  <Donut />
-                  <CenterValues />
-                </DonutChartContextProvider>
-              </Canvas>
-            </GestureDetector>
+    <GestureHandlerRootView>
+      <View onLayout={onLayout} style={{ flex: 1 }}>
+        {size.width > 0 && size.height > 0 && (
+          <>
+            <View style={{ position: "relative" }}>
+              <GestureDetector gesture={gesture}>
+                {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
+                <Canvas style={{ width: size.width, height: canvasHeight }}>
+                  <DonutChartContextProvider value={context}>
+                    <Donut />
+                    <CenterValues />
+                  </DonutChartContextProvider>
+                </Canvas>
+              </GestureDetector>
 
-            {/* Custom center values rendered as positioned View */}
-            {config.centerValues?.enabled && config.centerValues.renderContent && (
-              <View
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  width: size.width,
-                  height: canvasHeight,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  pointerEvents: "none",
-                }}
-              >
-                {config.centerValues.renderContent(chartData, totalValue, hoveredSegment)}
-              </View>
-            )}
-          </View>
+              {/* Custom center values rendered as positioned View */}
+              {config.centerValues?.enabled && config.centerValues.renderContent && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: size.width,
+                    height: canvasHeight,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {config.centerValues.renderContent(
+                    chartData,
+                    totalValue,
+                    hoveredSegment
+                  )}
+                </View>
+              )}
+            </View>
 
-          <View onLayout={(e) => setLegendHeight(e.nativeEvent.layout.height)}>
-            <DonutChartContextProvider value={context}>
-              <Legend />
-            </DonutChartContextProvider>
-          </View>
-        </>
-      )}
-    </View>
+            <View onLayout={(e) => setLegendHeight(e.nativeEvent.layout.height)}>
+              <DonutChartContextProvider value={context}>
+                <Legend />
+              </DonutChartContextProvider>
+            </View>
+          </>
+        )}
+      </View>
+    </GestureHandlerRootView>
   );
 }

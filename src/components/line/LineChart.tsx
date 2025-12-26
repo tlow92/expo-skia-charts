@@ -1,7 +1,7 @@
 import { Canvas, Group } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
 import { type LayoutChangeEvent, View } from "react-native";
-import { GestureDetector } from "react-native-gesture-handler";
+import { GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { useSharedValue } from "react-native-reanimated";
 import { useLineTouchHandler } from "../../hooks/useLineTouchHandler";
 import { useSelectedDataPoint } from "../../hooks/useSelectedDataPoint";
@@ -78,79 +78,84 @@ export function LineChart({ config }: LineChartProps) {
   });
 
   return (
-    <View onLayout={onLayout} style={{ flex: 1 }}>
-      {size.width > 0 && size.height > 0 && (
-        <>
-          <GestureDetector gesture={gesture}>
-            {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
-            <Canvas style={{ width: size.width, height: size.height }}>
-              <LineChartContextProvider value={context}>
-                <Group>
-                  {/* Y-Axis */}
-                  {config.yAxis?.enabled && (
+    <GestureHandlerRootView>
+      <View onLayout={onLayout} style={{ flex: 1 }}>
+        {size.width > 0 && size.height > 0 && (
+          <>
+            <GestureDetector gesture={gesture}>
+              {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
+              <Canvas style={{ width: size.width, height: size.height }}>
+                <LineChartContextProvider value={context}>
+                  <Group>
+                    {/* Y-Axis */}
+                    {config.yAxis?.enabled && (
+                      <Group
+                        transform={[
+                          { translateX: MARGIN_LEFT },
+                          { translateY: MARGIN_TOP },
+                        ]}
+                      >
+                        <YAxis
+                          data={chartData}
+                          width={chartWidth}
+                          height={chartHeight}
+                          config={config.yAxis}
+                        />
+                      </Group>
+                    )}
+
+                    {/* X-Axis */}
+                    {config.xAxis?.enabled && (
+                      <Group
+                        transform={[
+                          { translateX: MARGIN_LEFT },
+                          { translateY: chartHeight + MARGIN_TOP },
+                        ]}
+                      >
+                        <XAxis
+                          data={chartData}
+                          width={chartWidth}
+                          height={chartHeight}
+                          config={config.xAxis}
+                        />
+                      </Group>
+                    )}
+
+                    {/* Chart Line(s) */}
                     <Group
                       transform={[
                         { translateX: MARGIN_LEFT },
                         { translateY: MARGIN_TOP },
                       ]}
                     >
-                      <YAxis
-                        data={chartData}
-                        width={chartWidth}
-                        height={chartHeight}
-                        config={config.yAxis}
-                      />
+                      {isMultiLine && config.series ? (
+                        <MultiLine series={config.series} />
+                      ) : (
+                        <Line />
+                      )}
                     </Group>
-                  )}
-
-                  {/* X-Axis */}
-                  {config.xAxis?.enabled && (
-                    <Group
-                      transform={[
-                        { translateX: MARGIN_LEFT },
-                        { translateY: chartHeight + MARGIN_TOP },
-                      ]}
-                    >
-                      <XAxis
-                        data={chartData}
-                        width={chartWidth}
-                        height={chartHeight}
-                        config={config.xAxis}
-                      />
-                    </Group>
-                  )}
-
-                  {/* Chart Line(s) */}
-                  <Group
-                    transform={[{ translateX: MARGIN_LEFT }, { translateY: MARGIN_TOP }]}
-                  >
-                    {isMultiLine && config.series ? (
-                      <MultiLine series={config.series} />
-                    ) : (
-                      <Line />
-                    )}
                   </Group>
-                </Group>
-              </LineChartContextProvider>
-            </Canvas>
-          </GestureDetector>
+                </LineChartContextProvider>
+              </Canvas>
+            </GestureDetector>
 
-          {/* Tooltip */}
-          {config.hover?.tooltip && (
-            <Tooltip
-              x={x}
-              y={y}
-              dataPoint={selectedDataPoint}
-              config={config.hover.tooltip}
-              chartWidth={chartWidth}
-              chartHeight={chartHeight}
-              marginLeft={MARGIN_LEFT}
-              marginTop={MARGIN_TOP}
-              data={chartData}
-            />
-          )}
-        </>
-      )}
-    </View>
+            {/* Tooltip */}
+            {config.hover?.tooltip && (
+              <Tooltip
+                x={x}
+                y={y}
+                dataPoint={selectedDataPoint}
+                config={config.hover.tooltip}
+                chartWidth={chartWidth}
+                chartHeight={chartHeight}
+                marginLeft={MARGIN_LEFT}
+                marginTop={MARGIN_TOP}
+                data={chartData}
+              />
+            )}
+          </>
+        )}
+      </View>
+    </GestureHandlerRootView>
   );
 }

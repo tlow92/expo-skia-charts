@@ -18,7 +18,12 @@ interface UseTooltipPositionParams {
   offset: { x: number; y: number };
   marginLeft: number;
   marginTop: number;
-  data: LineChartDataPoint[];
+  dataBounds: {
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+  };
 }
 
 export function useTooltipPosition({
@@ -33,7 +38,7 @@ export function useTooltipPosition({
   offset,
   marginLeft,
   marginTop,
-  data,
+  dataBounds,
 }: UseTooltipPositionParams): AnimatedStyle<ViewStyle> {
   return useAnimatedStyle(() => {
     "worklet";
@@ -50,16 +55,10 @@ export function useTooltipPosition({
     let baseX: number;
     let baseY: number;
 
-    if (snapToPoint && data.length > 0) {
-      // Calculate screen coordinates for the data point
-      const xValues = data.map((point) => point.x);
-      const yValues = data.map((point) => point.y);
-      const minX = Math.min(...xValues);
-      const maxX = Math.max(...xValues);
-      const minY = Math.min(...yValues);
-      const maxY = Math.max(...yValues);
-
+    if (snapToPoint) {
       const point = dataPoint.value;
+      const { minX, maxX, minY, maxY } = dataBounds;
+
       // Map data point to screen coordinates
       baseX = ((point.x - minX) / (maxX - minX)) * chartWidth;
       baseY = chartHeight - ((point.y - minY) / (maxY - minY)) * chartHeight;
@@ -112,6 +111,9 @@ export function useTooltipPosition({
     offset.y,
     marginLeft,
     marginTop,
-    data,
+    dataBounds.minX,
+    dataBounds.maxX,
+    dataBounds.minY,
+    dataBounds.maxY,
   ]);
 }
