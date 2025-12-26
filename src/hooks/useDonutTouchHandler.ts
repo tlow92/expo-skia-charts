@@ -8,7 +8,8 @@ export const useDonutTouchHandler = (
   size: { width: number; height: number },
   strokeWidth: number,
   chartData: ProcessedSegment[],
-  enabled: boolean
+  enabled: boolean,
+  hitSlop: number = 0
 ) => {
   return useMemo(() => {
     const handleTouch = (x: number, y: number) => {
@@ -18,10 +19,13 @@ export const useDonutTouchHandler = (
       const dx = x - centerX;
       const dy = y - centerY;
       const distance = Math.sqrt(dx * dx + dy * dy);
-      const radius = Math.min(size.width, size.height) / 2 - strokeWidth / 2;
+      // Match the radius calculation from Donut.tsx (includes -10 padding)
+      const radius = Math.min(size.width, size.height) / 2 - strokeWidth / 2 - 10;
 
-      // Check if touch is within the donut ring
-      if (distance < radius + strokeWidth / 2 && distance > radius - strokeWidth / 2) {
+      // Check if touch is within the donut ring (expanded by hitSlop)
+      const innerBound = radius - strokeWidth / 2 - hitSlop;
+      const outerBound = radius + strokeWidth / 2 + hitSlop;
+      if (distance < outerBound && distance > innerBound) {
         let angle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
         if (angle < 0) {
           angle += 360;
@@ -84,5 +88,5 @@ export const useDonutTouchHandler = (
       });
 
     return Gesture.Race(hover, pan);
-  }, [enabled, hoveredIndex, size, strokeWidth, chartData]);
+  }, [enabled, hoveredIndex, size, strokeWidth, chartData, hitSlop]);
 };

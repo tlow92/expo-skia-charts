@@ -31,6 +31,7 @@ export type HoverConfig = {
   enabled?: boolean;
   animateOnHover?: boolean;
   updateCenterOnHover?: boolean;
+  hitSlop?: number; // Expands the touch area by this many pixels (radius)
 };
 
 export type DonutChartConfig = {
@@ -41,6 +42,8 @@ export type DonutChartConfig = {
   centerValues?: CenterValuesConfig;
   legend?: LegendConfig;
   hover?: HoverConfig;
+  gap?: number; // Gap between segments in degrees
+  roundedCorners?: boolean; // Whether to round segment edges (requires gap > 0)
 };
 
 export type DonutChartProps = {

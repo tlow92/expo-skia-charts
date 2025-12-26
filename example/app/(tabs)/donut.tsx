@@ -23,7 +23,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data,
-              strokeWidth: 40,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: true },
               hover: { enabled: true },
@@ -35,7 +35,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data,
-              strokeWidth: 40,
+              strokeWidth: 20,
               centerValues: { enabled: false },
               legend: { enabled: true },
               hover: { enabled: true },
@@ -47,7 +47,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data,
-              strokeWidth: 40,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: false },
               hover: { enabled: true },
@@ -60,7 +60,7 @@ export default function TabTwoScreen() {
             config={{
               data: smallData,
               colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
-              strokeWidth: 60,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: true },
               hover: { enabled: true },
@@ -73,7 +73,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data: smallData,
-              strokeWidth: 30,
+              strokeWidth: 20,
               centerValues: { enabled: false },
               legend: { enabled: false },
               hover: { enabled: false },
@@ -85,7 +85,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data,
-              strokeWidth: 45,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: true },
               hover: { enabled: true, animateOnHover: true },
@@ -97,7 +97,7 @@ export default function TabTwoScreen() {
           <DonutChart
             config={{
               data,
-              strokeWidth: 45,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: true },
               hover: { enabled: true, updateCenterOnHover: true },
@@ -105,17 +105,82 @@ export default function TabTwoScreen() {
           />
         </ChartWrapper>
 
-        <ChartWrapper title="Hover: Both Effects">
+        <ChartWrapper title="Hover: Both Effects and Custom Legend">
           <DonutChart
             config={{
               data,
-              strokeWidth: 45,
+              strokeWidth: 20,
+              centerValues: { enabled: true },
+              legend: {
+                enabled: true,
+                renderContent: (segments) => {
+                  return segments.map((segment, index) => {
+                    return (
+                      <View
+                        key={index}
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text style={{ fontSize: 12, color: "#1F2937" }}>
+                          {segment.label}
+                        </Text>
+                        <Text style={{ fontSize: 12, color: "#1F2937" }}>
+                          {segment.value}
+                        </Text>
+                      </View>
+                    );
+                  });
+                },
+              },
+              hover: {
+                enabled: true,
+                animateOnHover: true,
+                updateCenterOnHover: true,
+              },
+            }}
+          />
+        </ChartWrapper>
+
+        <ChartWrapper title="Gap with Rounded Corners">
+          <DonutChart
+            config={{
+              data,
+              strokeWidth: 20,
+              gap: 5,
+              roundedCorners: true,
+              centerValues: { enabled: true },
+              legend: { enabled: true },
+              hover: { enabled: true },
+            }}
+          />
+        </ChartWrapper>
+
+        <ChartWrapper title="Large Gap with Rounded Corners">
+          <DonutChart
+            config={{
+              data: smallData,
+              colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
+              strokeWidth: 20,
+              gap: 12,
+              roundedCorners: true,
+              centerValues: { enabled: true },
+              legend: { enabled: true },
+              hover: { enabled: true, updateCenterOnHover: true, animateOnHover: true },
+            }}
+          />
+        </ChartWrapper>
+
+        <ChartWrapper title="Expanded Touch Area (hitSlop: 50)">
+          <DonutChart
+            config={{
+              data,
+              strokeWidth: 20,
               centerValues: { enabled: true },
               legend: { enabled: true },
               hover: {
                 enabled: true,
                 animateOnHover: true,
                 updateCenterOnHover: true,
+                hitSlop: 50,
               },
             }}
           />
@@ -155,9 +220,9 @@ const styles = StyleSheet.create({
     color: "#1F2937",
   },
   chartContainer: {
-    height: 300,
     backgroundColor: "#F9FAFB",
     borderRadius: 8,
     padding: 16,
+    height: 350,
   },
 });

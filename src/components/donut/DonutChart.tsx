@@ -23,12 +23,14 @@ const DEFAULT_COLORS = [
 
 export function DonutChart({ config }: DonutChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const [legendHeight, setLegendHeight] = useState(0);
   const hoveredIndex = useSharedValue<number | null>(null);
 
   const colors = config.colors ?? DEFAULT_COLORS;
-  const strokeWidth = config.strokeWidth ?? 40;
+  const strokeWidth = config.strokeWidth ?? 30;
   const animationDuration = config.animationDuration ?? 1000;
   const hoverEnabled = config.hover?.enabled ?? false;
+  const hitSlop = config.hover?.hitSlop ?? 0;
 
   // Animation values
   const animationProgress = useSharedValue(0);
@@ -50,10 +52,33 @@ export function DonutChart({ config }: DonutChartProps) {
       return [];
     }
 
+    const baseGap = config.gap ?? 0;
+    const roundedCorners = config.roundedCorners ?? false;
+
+    // Calculate the radius of the donut arc
+    const minDimension = Math.min(
+      size.width > 0 ? size.width : 300,
+      size.height > 0 ? size.height : 300
+    );
+    const radius = minDimension / 2 - strokeWidth / 2 - 10;
+
+    // When using rounded corners, calculate the additional degrees needed
+    // to account for the rounded caps (which extend strokeWidth/2 on each side)
+    let gap = baseGap;
+    if (roundedCorners && baseGap > 0 && radius > 0) {
+      // Each gap needs to accommodate strokeWidth pixels (both caps combined)
+      // Convert pixel gap to degrees: degrees = (pixels / radius) * (180 / π)
+      const additionalDegrees = (strokeWidth / radius) * (180 / Math.PI);
+      gap = baseGap + additionalDegrees;
+    }
+
+    const totalGapAngle = gap * config.data.length;
+
     let currentAngle = -90; // Start from top
     return config.data.map((item, index) => {
       const percentage = item.value / total;
-      const sweepAngle = percentage * 360;
+      // Reduce sweep angle to account for gaps
+      const sweepAngle = percentage * (360 - totalGapAngle);
       const colorIndex = index % colors.length;
       const fallbackColor = DEFAULT_COLORS[0] || "#3B82F6";
       const segment: ProcessedSegment = {
@@ -64,30 +89,43 @@ export function DonutChart({ config }: DonutChartProps) {
         color: colors[colorIndex] ?? fallbackColor,
         index,
       };
-      currentAngle += sweepAngle;
+      // Move to next segment, adding gap
+      currentAngle += sweepAngle + gap;
       return segment;
     });
-  }, [config.data, colors]);
+  }, [
+    config.data,
+    config.gap,
+    config.roundedCorners,
+    strokeWidth,
+    colors,
+    size.width,
+    size.height,
+  ]);
 
-  // Create context value
+  // Calculate canvas height by reserving space for legend
+  const canvasHeight = size.height - legendHeight;
+
+  // Create context value with adjusted canvas size
   const context = useMemo<DonutChartContextType>(
     () => ({
-      size,
+      size: { width: size.width, height: canvasHeight },
       hoveredIndex,
       config,
       chartData,
       animationProgress,
     }),
-    [size, hoveredIndex, config, chartData, animationProgress]
+    [size.width, canvasHeight, hoveredIndex, config, chartData, animationProgress]
   );
 
-  // Gesture handling
+  // Gesture handling - use adjusted canvas size to match rendering
   const gesture = useDonutTouchHandler(
     hoveredIndex,
-    size,
+    { width: size.width, height: canvasHeight },
     strokeWidth,
     chartData,
-    hoverEnabled
+    hoverEnabled,
+    hitSlop
   );
 
   return (
@@ -96,7 +134,7 @@ export function DonutChart({ config }: DonutChartProps) {
         <>
           <GestureDetector gesture={gesture}>
             {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
-            <Canvas style={{ width: size.width, height: size.height }}>
+            <Canvas style={{ width: size.width, height: canvasHeight }}>
               <DonutChartContextProvider value={context}>
                 <Donut />
                 <CenterValues />
@@ -104,9 +142,11 @@ export function DonutChart({ config }: DonutChartProps) {
             </Canvas>
           </GestureDetector>
 
-          <DonutChartContextProvider value={context}>
-            <Legend />
-          </DonutChartContextProvider>
+          <View onLayout={(e) => setLegendHeight(e.nativeEvent.layout.height)}>
+            <DonutChartContextProvider value={context}>
+              <Legend />
+            </DonutChartContextProvider>
+          </View>
         </>
       )}
     </View>

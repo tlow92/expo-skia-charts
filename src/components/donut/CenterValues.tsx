@@ -12,11 +12,20 @@ export function CenterValues() {
 
   const centerValuesConfig = config.centerValues;
   const updateCenterOnHover = config.hover?.updateCenterOnHover ?? false;
+  const strokeWidth = config.strokeWidth ?? 30;
 
   // Calculate total value
   const totalValue = useMemo(() => {
     return config.data.reduce((sum, item) => sum + item.value, 0);
   }, [config.data]);
+
+  // Calculate font size based on chart size
+  const fontSize = useMemo(() => {
+    const minDimension = Math.min(size.width, size.height);
+    const innerRadius = minDimension / 2 - strokeWidth;
+    // Font size is approximately 20-25% of inner diameter
+    return Math.max(16, Math.min(48, innerRadius * 0.4));
+  }, [size.width, size.height, strokeWidth]);
 
   // Create paragraphs for all possible values (total + each segment)
   const valueParagraphs = useMemo(() => {
@@ -26,7 +35,7 @@ export function CenterValues() {
     };
     const textStyle = {
       color: Skia.Color("#1F2937"),
-      fontSize: 32,
+      fontSize,
       fontStyle: {
         weight: 700,
       },
@@ -61,16 +70,18 @@ export function CenterValues() {
     }
 
     return paragraphs;
-  }, [totalValue, chartData, robotoFont, updateCenterOnHover]);
+  }, [totalValue, chartData, robotoFont, updateCenterOnHover, fontSize]);
 
   const percentageParagraphs = useMemo(() => {
     if (!robotoFont || !updateCenterOnHover) return [];
     const paragraphStyle = {
       textAlign: TextAlign.Center,
     };
+    // Make percentage font size relative to value font size (40% of value size)
+    const percentageFontSize = fontSize * 0.4;
     const textStyle = {
       color: Skia.Color("#6B7280"),
-      fontSize: 14,
+      fontSize: percentageFontSize,
     };
 
     const paragraphs = [];
@@ -91,7 +102,7 @@ export function CenterValues() {
     }
 
     return paragraphs;
-  }, [chartData, robotoFont, updateCenterOnHover]);
+  }, [chartData, robotoFont, updateCenterOnHover, fontSize]);
 
   if (!centerValuesConfig || centerValuesConfig.enabled === false) {
     return null;
@@ -180,7 +191,8 @@ function ValueParagraph({
   });
 
   const centerValueX = size.width / 2 - item.paragraph.getMaxWidth() / 2;
-  const centerValueY = size.height / 2 - item.paragraph.getHeight() - 5;
+  // Always center the value text vertically
+  const centerValueY = size.height / 2 - item.paragraph.getHeight() / 2;
 
   return (
     <Group layer={<Paint opacity={opacity} />}>
@@ -222,7 +234,8 @@ function PercentageParagraph({
   });
 
   const percentageX = size.width / 2 - item.paragraph.getMaxWidth() / 2;
-  const percentageY = size.height / 2 + 10;
+  // Position percentage below center with increased spacing (30px below center point)
+  const percentageY = size.height / 2 + 30;
 
   return (
     <Group layer={<Paint opacity={opacity} />}>

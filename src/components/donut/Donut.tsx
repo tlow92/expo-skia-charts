@@ -8,8 +8,11 @@ export function Donut() {
   const { size, chartData, animationProgress, config, hoveredIndex } =
     useDonutChartContext();
 
-  const strokeWidth = config.strokeWidth ?? 40;
+  const strokeWidth = config.strokeWidth ?? 30;
   const animateOnHover = config.hover?.animateOnHover ?? false;
+  const gap = config.gap ?? 0;
+  const roundedCorners = config.roundedCorners ?? false;
+  const strokeCap = roundedCorners && gap > 0 ? "round" : "butt";
 
   const paths = useMemo(() => {
     if (size.width === 0 || size.height === 0 || chartData.length === 0) {
@@ -51,6 +54,7 @@ export function Donut() {
             key={pathData.index}
             pathData={pathData}
             strokeWidth={strokeWidth}
+            strokeCap={strokeCap}
             animationProgress={animationProgress}
             hoveredIndex={hoveredIndex}
             animateOnHover={animateOnHover}
@@ -64,6 +68,7 @@ export function Donut() {
 type SegmentPathProps = {
   pathData: { path: ReturnType<typeof Skia.Path.Make>; color: string; index: number };
   strokeWidth: number;
+  strokeCap: "butt" | "round";
   animationProgress: SharedValue<number>;
   hoveredIndex: SharedValue<number | null>;
   animateOnHover: boolean;
@@ -72,6 +77,7 @@ type SegmentPathProps = {
 function SegmentPath({
   pathData,
   strokeWidth,
+  strokeCap,
   animationProgress,
   hoveredIndex,
   animateOnHover,
@@ -89,7 +95,7 @@ function SegmentPath({
       style="stroke"
       color={pathData.color}
       strokeWidth={strokeWidth}
-      strokeCap="butt"
+      strokeCap={strokeCap}
       end={animationProgress}
       opacity={opacity}
     />
