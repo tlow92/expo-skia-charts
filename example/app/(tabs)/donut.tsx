@@ -1,6 +1,14 @@
 import { DonutChart } from "expo-skia-charts";
 import type { PropsWithChildren } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import Animated, {
+  Easing,
+  FadeInDown,
+  FadeInUp,
+  FadeOutUp,
+  ZoomIn,
+  ZoomOut,
+} from "react-native-reanimated";
 
 export default function TabTwoScreen() {
   const data = [
@@ -185,6 +193,40 @@ export default function TabTwoScreen() {
             }}
           />
         </ChartWrapper>
+
+        <ChartWrapper title="Custom Center Values">
+          <DonutChart
+            config={{
+              data: smallData,
+              colors: ["#FF6B6B", "#4ECDC4", "#45B7D1"],
+              strokeWidth: 20,
+              gap: 5,
+              roundedCorners: true,
+              legend: { enabled: true },
+              hover: { enabled: true, animateOnHover: true, hitSlop: 100 },
+              centerValues: {
+                enabled: true,
+                renderContent: (_segments, total, hoveredSegment) => {
+                  const { value, label, color } = hoveredSegment || {
+                    value: total,
+                    label: "Total",
+                    color: "#1F2937",
+                  };
+                  if (!value || !label || !color) return null;
+
+                  return (
+                    <AnimatedCenterValues
+                      value={value}
+                      label={label}
+                      color={color}
+                      total={total}
+                    />
+                  );
+                },
+              },
+            }}
+          />
+        </ChartWrapper>
       </View>
     </ScrollView>
   );
@@ -226,3 +268,46 @@ const styles = StyleSheet.create({
     height: 350,
   },
 });
+
+function AnimatedCenterValues({
+  value,
+  label,
+  color,
+  total,
+}: {
+  value: number;
+  label: string;
+  color: string;
+  total: number;
+}) {
+  return (
+    // @ts-expect-error - Reanimated types have issues with children prop
+    <Animated.View
+      key={`${value}-${label}`}
+      entering={FadeInDown.easing(Easing.quad).duration(150).delay(50)}
+      exiting={FadeOutUp.easing(Easing.quad).duration(150)}
+      style={{ alignItems: "center" }}
+    >
+      <Text
+        style={{
+          fontSize: 32,
+          fontWeight: "bold",
+          color: color,
+        }}
+      >
+        {value}
+      </Text>
+      <Text style={{ fontSize: 16, color: "#6B7280", marginTop: 4 }}>{label}</Text>
+      <Text
+        style={{
+          fontSize: 12,
+          color: "#9CA3AF",
+          marginTop: 2,
+          opacity: value !== total ? 1 : 0,
+        }}
+      >
+        {((value / total) * 100).toFixed(0)}% of {total}
+      </Text>
+    </Animated.View>
+  );
+}

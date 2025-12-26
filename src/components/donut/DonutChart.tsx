@@ -3,7 +3,13 @@ import { useMemo, useState } from "react";
 import type { LayoutChangeEvent } from "react-native";
 import { View } from "react-native";
 import { GestureDetector } from "react-native-gesture-handler";
-import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import {
+  Easing,
+  runOnJS,
+  useAnimatedReaction,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { useDonutTouchHandler } from "../../hooks/useDonutTouchHandler";
 import type { DonutChartContextType } from "../../providers/DonutChartContextProvider";
 import { DonutChartContextProvider } from "../../providers/DonutChartContextProvider";
@@ -24,6 +30,9 @@ const DEFAULT_COLORS = [
 export function DonutChart({ config }: DonutChartProps) {
   const [size, setSize] = useState({ width: 0, height: 0 });
   const [legendHeight, setLegendHeight] = useState(0);
+  const [hoveredSegmentIndex, setHoveredSegmentIndex] = useState<number | null>(
+    null
+  );
   const hoveredIndex = useSharedValue<number | null>(null);
 
   const colors = config.colors ?? DEFAULT_COLORS;
@@ -31,6 +40,14 @@ export function DonutChart({ config }: DonutChartProps) {
   const animationDuration = config.animationDuration ?? 1000;
   const hoverEnabled = config.hover?.enabled ?? false;
   const hitSlop = config.hover?.hitSlop ?? 0;
+
+  // Sync SharedValue to React state for custom renderContent
+  useAnimatedReaction(
+    () => hoveredIndex.value,
+    (value) => {
+      runOnJS(setHoveredSegmentIndex)(value);
+    }
+  );
 
   // Animation values
   const animationProgress = useSharedValue(0);
@@ -128,19 +145,56 @@ export function DonutChart({ config }: DonutChartProps) {
     hitSlop
   );
 
+  // Calculate total value for custom center content
+  const totalValue = useMemo(() => {
+    return config.data.reduce((sum, item) => sum + item.value, 0);
+  }, [config.data]);
+
+  // Get hovered segment for custom center content
+  const hoveredSegment = useMemo(() => {
+    if (hoveredSegmentIndex === null || hoveredSegmentIndex === undefined)
+      return null;
+    return chartData[hoveredSegmentIndex] ?? null;
+  }, [chartData, hoveredSegmentIndex]);
+
   return (
     <View onLayout={onLayout} style={{ flex: 1 }}>
       {size.width > 0 && size.height > 0 && (
         <>
-          <GestureDetector gesture={gesture}>
-            {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
-            <Canvas style={{ width: size.width, height: canvasHeight }}>
-              <DonutChartContextProvider value={context}>
-                <Donut />
-                <CenterValues />
-              </DonutChartContextProvider>
-            </Canvas>
-          </GestureDetector>
+          <View style={{ position: "relative" }}>
+            <GestureDetector gesture={gesture}>
+              {/* @ts-ignore - Canvas accepts children but type definitions are incomplete */}
+              <Canvas style={{ width: size.width, height: canvasHeight }}>
+                <DonutChartContextProvider value={context}>
+                  <Donut />
+                  <CenterValues />
+                </DonutChartContextProvider>
+              </Canvas>
+            </GestureDetector>
+
+            {/* Custom center values rendered as positioned View */}
+            {config.centerValues?.enabled &&
+              config.centerValues.renderContent && (
+                <View
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    width: size.width,
+                    height: canvasHeight,
+                    justifyContent: "center",
+                    alignItems: "center",
+                    pointerEvents: "none",
+                  }}
+                >
+                  {config.centerValues.renderContent(
+                    chartData,
+                    totalValue,
+                    hoveredSegment
+                  )}
+                </View>
+              )}
+          </View>
 
           <View onLayout={(e) => setLegendHeight(e.nativeEvent.layout.height)}>
             <DonutChartContextProvider value={context}>
