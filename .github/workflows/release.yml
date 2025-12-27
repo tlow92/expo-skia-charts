@@ -77,7 +77,6 @@ jobs:
       - name: Setup npm authentication
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm whoami
 
       - name: Build package
         run: yarn prepare
