@@ -44,9 +44,7 @@
     "react-syntax-highlighter": "^16.1.0"
   },
   "devDependencies": {
-    "@types/gh-pages": "^6",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "gh-pages": "^6.3.0",
     "react-native-builder-bob": "^0.40.17",
     "react-native-monorepo-config": "^0.3.1"
   },
