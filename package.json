@@ -44,7 +44,7 @@
     "typecheck": "tsc",
     "test": "jest",
     "biome": "biome check --write .",
-    "release": "release-it --only-version"
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
