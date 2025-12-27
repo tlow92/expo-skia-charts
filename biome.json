@@ -106,6 +106,8 @@
       "!.tolgeerc",
       "!.yarnrc.yml",
       "!**/dist",
+      "!**/android",
+      "!**/ios",
       "!packages/app/api/client",
       "!packages/config/i18n",
       "!apps/aw-keycloakify/public/keycloakify-dev-resources"

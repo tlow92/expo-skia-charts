@@ -48,8 +48,17 @@
   },
   "keywords": [
     "react-native",
+    "expo",
+    "charts",
+    "skia",
+    "line-chart",
+    "donut-chart",
+    "pie-chart",
+    "data-visualization",
+    "react-native-skia",
     "ios",
-    "android"
+    "android",
+    "web"
   ],
   "repository": {
     "type": "git",

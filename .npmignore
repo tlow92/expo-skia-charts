@@ -1,0 +1,42 @@
+# Exclude development and example files from npm package
+example/
+docs/
+.github/
+.yarn/
+
+# Development config
+.editorconfig
+.nvmrc
+.watchmanconfig
+.yarnrc.yml
+biome.json
+lefthook.yml
+tsconfig.json
+tsconfig.build.json
+babel.config.js
+
+# AI assistant files
+CLAUDE.md
+GEMINI.md
+.gemini
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Tests
+**/__tests__/
+**/__fixtures__/
+**/__mocks__/
+
+# Source files (only include built files)
+src/
+
+# Build artifacts
+*.log
+yarn-error.log
+npm-debug.log
+
+# CI/CD
+.github/

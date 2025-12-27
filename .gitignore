@@ -85,4 +85,6 @@ android/generated
 # React Native Nitro Modules
 nitrogen/
 
+# AI assistant configuration
 .gemini
+GEMINI.md

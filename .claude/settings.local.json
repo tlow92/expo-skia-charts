@@ -19,10 +19,9 @@
       "Bash(yarn biome check:*)",
       "WebFetch(domain:github.com)",
       "Bash(ls:*)",
-      "Bash(yarn biome:*)"
+      "Bash(yarn biome:*)",
+      "Bash(npx @biomejs/biome check .)"
     ]
   },
-  "enabledMcpjsonServers": [
-    "context7"
-  ]
+  "enabledMcpjsonServers": ["context7"]
 }
