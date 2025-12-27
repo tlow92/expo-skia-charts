@@ -73,7 +73,7 @@ jobs:
         run: yarn prepare
 
       - name: Release
-        run: yarn release --ci --increment ${{ github.event.inputs.release-type }}
+        run: yarn release --ci --increment ${{ github.event.inputs.release-type }} --npm.skipChecks
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
