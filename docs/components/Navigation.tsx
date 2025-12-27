@@ -3,7 +3,9 @@ import type { Href } from "expo-router";
 import { Link, usePathname } from "expo-router";
 import React from "react";
 import {
+  Dimensions,
   Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -138,6 +140,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderWidth: 1,
     borderColor: "#e5e7eb",
+    height: 39,
+    width: 39,
   },
   item: {
     paddingVertical: 8,
