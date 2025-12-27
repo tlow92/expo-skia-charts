@@ -20,8 +20,11 @@
       "WebFetch(domain:github.com)",
       "Bash(ls:*)",
       "Bash(yarn biome:*)",
-      "Bash(npx @biomejs/biome check .)"
+      "Bash(npx @biomejs/biome check .)",
+      "Bash(yarn prepare)"
     ]
   },
-  "enabledMcpjsonServers": ["context7"]
+  "enabledMcpjsonServers": [
+    "context7"
+  ]
 }
