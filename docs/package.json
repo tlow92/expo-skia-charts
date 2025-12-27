@@ -9,8 +9,7 @@
     "web": "expo start --web",
     "web:export": "expo export -p web",
     "web:serve": "npx serve dist",
-    "deploy": "gh-pages --nojekyll -d dist",
-    "predeploy": "expo export -p web"
+    "deploy": "expo export -p web"
   },
   "dependencies": {
     "@bacons/mdx": "^0.4.5",

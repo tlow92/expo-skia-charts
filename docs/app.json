@@ -46,7 +46,7 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true,
-      "baseUrl": "/expo-skia-charts"
+      "baseUrl": "/"
     }
   }
 }
