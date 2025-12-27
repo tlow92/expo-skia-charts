@@ -2,6 +2,10 @@
 
 Modern, performant, and highly customizable chart library for React Native built with Skia. Supports iOS, Android, and Web with smooth animations and interactive features.
 
+## Demos
+
+https://tlow92.github.io/expo-skia-charts/getting-started
+
 ## Features
 
 - **High Performance**: Built on top of react-native-skia for native rendering performance
