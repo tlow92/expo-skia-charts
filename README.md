@@ -4,7 +4,9 @@
   <p align="center">
     Modern, performant, and highly customizable chart library for React Native built with Skia. Supports iOS, Android, and Web with smooth animations and interactive features.
     <br />
-    <a href="https://github.com/tlow92/expo-key-event?tab=readme-ov-file#getting-started">Documentation + Demos</a>
+    <a href="https://github.com/tlow92/expo-key-event?tab=readme-ov-file#getting-started">📖 Documentation + Demos</a>
+    &middot;
+    <a href="https://github.com/tlow92/expo-key-event?tab=readme-ov-file#getting-started](https://github.com/tlow92/expo-skia-charts/discussions/categories/polls">💡 Vote on the Roadmap!</a>
   </p>
 </div>
 
@@ -123,13 +125,6 @@ function MyChart() {
 ## Contributing
 
 - I appreciate any contirbution, feel free to open a PR. I will gladly merge it.
-
-## Roadmap
-
-- [ ] Barchart
-- [ ] Dynamic tick counts depending on size
-- [ ] Area chart option for linechart
-- [ ] Peak-labels (only display label on peaks and troughs)
 
 ## License
 
