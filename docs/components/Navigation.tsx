@@ -3,9 +3,7 @@ import type { Href } from "expo-router";
 import { Link, usePathname } from "expo-router";
 import React from "react";
 import {
-  Dimensions,
   Linking,
-  Platform,
   ScrollView,
   StyleSheet,
   Text,

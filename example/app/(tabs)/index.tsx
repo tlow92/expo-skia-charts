@@ -1,11 +1,7 @@
 import { LineChart } from "expo-skia-charts";
 import { useMemo } from "react";
 import { Text, View } from "react-native";
-import {
-  Gesture,
-  GestureHandlerRootView,
-  ScrollView,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView, ScrollView } from "react-native-gesture-handler";
 
 export default function HomeScreen() {
   const chartData = useMemo(() => {

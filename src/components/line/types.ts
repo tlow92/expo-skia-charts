@@ -270,6 +270,12 @@ export type LineChartConfig = {
    * If not provided, no Y-axis is rendered.
    */
   yAxis?: YAxisConfig;
+  /**
+   * Duration of entry animation in milliseconds.
+   * Animation reveals the line from left to right on mount.
+   * @default 1000
+   */
+  animationDuration?: number;
 };
 
 /**

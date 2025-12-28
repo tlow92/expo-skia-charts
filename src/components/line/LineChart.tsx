@@ -2,7 +2,7 @@ import { Canvas, Group } from "@shopify/react-native-skia";
 import { useMemo, useState } from "react";
 import { type LayoutChangeEvent, View } from "react-native";
 import { GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
-import { useSharedValue } from "react-native-reanimated";
+import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
 import { useLineTouchHandler } from "../../hooks/useLineTouchHandler";
 import { useSelectedDataPoint } from "../../hooks/useSelectedDataPoint";
 import {
@@ -21,14 +21,23 @@ export function LineChart({ config }: LineChartProps) {
   const x = useSharedValue(Infinity);
   const y = useSharedValue(Infinity);
   const selectedDataPoint = useSharedValue<LineChartDataPoint | null>(null);
+  const animationProgress = useSharedValue(0);
 
   // Detect multi-line mode
   const isMultiLine = !!config.series;
   const chartData = config.data ?? config.series?.[0]?.data ?? [];
+  const animationDuration = config.animationDuration ?? 1000;
 
   const onLayout = (event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
     setSize({ width, height });
+
+    // Start animation when layout is complete
+    animationProgress.value = 0;
+    animationProgress.value = withTiming(1, {
+      duration: animationDuration,
+      easing: Easing.inOut(Easing.cubic),
+    });
   };
 
   // Calculate margins for axes
@@ -62,8 +71,9 @@ export function LineChart({ config }: LineChartProps) {
       x,
       y,
       config,
+      animationProgress,
     }),
-    [chartWidth, chartHeight, x, y, config]
+    [chartWidth, chartHeight, x, y, config, animationProgress]
   );
 
   // Track selected data point and trigger onHover callback

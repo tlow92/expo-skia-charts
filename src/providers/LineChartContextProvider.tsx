@@ -12,6 +12,7 @@ export type LineChartContextType = {
   x: SharedValue<number>;
   y: SharedValue<number>;
   config: LineChartConfig;
+  animationProgress: SharedValue<number>;
 };
 
 const LineChartContext = createContext<LineChartContextType | null>(null);

@@ -23,6 +23,7 @@ export function Line({
     size: { width, height },
     x,
     config: { hover, colors: defaultColors, data: contextData },
+    animationProgress,
   } = useLineChartContext();
 
   // Use prop data if provided, otherwise fall back to context data
@@ -86,6 +87,7 @@ export function Line({
             color={colors?.lineBase ?? "#666"}
             strokeWidth={lineStrokeWidth}
             opacity={0.3}
+            end={animationProgress}
           />
         </Group>
       )}
@@ -98,6 +100,7 @@ export function Line({
           strokeJoin="round"
           strokeCap="round"
           color={colors?.highlightColor ?? "#000"}
+          end={animationProgress}
         />
       </Group>
       {hover?.showDot && (

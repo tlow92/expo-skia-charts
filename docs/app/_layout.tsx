@@ -2,7 +2,7 @@ import { MDXComponents, MDXStyles } from "@bacons/mdx";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Dimensions, Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import "react-native-reanimated";
 import { CodeBlock } from "../components/CodeBlock";
 import { GettingStartedSection } from "../components/GettingStartedSection";
