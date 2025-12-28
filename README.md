@@ -23,7 +23,7 @@
 
 ## Available Charts
 
-- **LineChart**: Single and multi-line charts with smooth curves, axes, grid lines, and interactive tooltips
+- **LineChart**: Single and multi-line charts with smooth curves, area fills (gradient/solid), axes, grid lines, and interactive tooltips
 - **BarChart**: Vertical and horizontal bar charts with grouped/stacked modes, hover effects, rounded corners, and custom tooltips
 - **DonutChart**: Donut and pie charts with hover effects, legends, custom center values, and segment gaps
 

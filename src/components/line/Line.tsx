@@ -1,10 +1,17 @@
-import { Circle, Group, Path, rect } from "@shopify/react-native-skia";
+import {
+  Circle,
+  Group,
+  LinearGradient,
+  Path,
+  rect,
+  vec,
+} from "@shopify/react-native-skia";
 import { useMemo } from "react";
 import { useDerivedValue } from "react-native-reanimated";
 import { useLineChartContext } from "../../providers/LineChartContextProvider";
 import { getYForX } from "../../utils/math";
 import type { LineChartColors, LineChartDataPoint } from "./types";
-import { buildLine, buildLineWithDomain, PADDING } from "./utils";
+import { buildAreaPath, buildLine, buildLineWithDomain, PADDING } from "./utils";
 
 interface LineProps {
   data?: LineChartDataPoint[];
@@ -30,13 +37,25 @@ export function Line({
   const data = propData ?? contextData;
   const colors = propColors ?? defaultColors;
 
-  const { path } = useMemo(() => {
-    if (!data) return { path: null, minY: 0, maxY: 0 };
+  const { path, areaPath } = useMemo(() => {
+    if (!data)
+      return { path: null, areaPath: null, minY: 0, maxY: 0, projectedPoints: [] };
+
+    let result;
     if (domain) {
-      return buildLineWithDomain(data, width, height, domain);
+      result = buildLineWithDomain(data, width, height, domain);
+    } else {
+      result = buildLine(data, width, height);
     }
-    return buildLine(data, width, height);
-  }, [data, width, height, domain]);
+
+    // Build area path if fill is configured
+    let areaPath = null;
+    if (colors?.areaFill && result.path && result.projectedPoints) {
+      areaPath = buildAreaPath(result.path, result.projectedPoints);
+    }
+
+    return { ...result, areaPath };
+  }, [data, width, height, domain, colors?.areaFill]);
 
   const DOT_SIZE = hover?.dotSize ?? 6;
 
@@ -79,6 +98,47 @@ export function Line({
 
   return (
     <Group transform={[{ translateY: height - PADDING }, { scaleY: -1 }]}>
+      {/* Area Fill - Base (unhighlighted) */}
+      {areaPath && colors?.areaFill && hover?.highlightLine && (
+        <Group clip={clipBeforeCursor}>
+          <Path
+            path={areaPath}
+            style="fill"
+            opacity={0.3}
+            color={colors.areaFill.type === "solid" ? colors.areaFill.color : undefined}
+          >
+            {colors.areaFill.type === "gradient" && (
+              <LinearGradient
+                start={vec(0, height - PADDING * 2)}
+                end={vec(0, 0)}
+                colors={[colors.areaFill.startColor, colors.areaFill.endColor]}
+              />
+            )}
+          </Path>
+        </Group>
+      )}
+
+      {/* Area Fill - Highlighted */}
+      {areaPath && colors?.areaFill && (
+        <Group clip={clipAfterCursor}>
+          <Path
+            path={areaPath}
+            style="fill"
+            end={animationProgress}
+            color={colors.areaFill.type === "solid" ? colors.areaFill.color : undefined}
+          >
+            {colors.areaFill.type === "gradient" && (
+              <LinearGradient
+                start={vec(0, height - PADDING * 2)}
+                end={vec(0, 0)}
+                colors={[colors.areaFill.startColor, colors.areaFill.endColor]}
+              />
+            )}
+          </Path>
+        </Group>
+      )}
+
+      {/* Line Stroke - Base (unhighlighted) */}
       {hover?.highlightLine && (
         <Group clip={clipBeforeCursor}>
           <Path
@@ -92,6 +152,7 @@ export function Line({
         </Group>
       )}
 
+      {/* Line Stroke - Highlighted */}
       <Group clip={clipAfterCursor}>
         <Path
           path={path}
@@ -103,6 +164,8 @@ export function Line({
           end={animationProgress}
         />
       </Group>
+
+      {/* Hover Dot */}
       {hover?.showDot && (
         <Circle
           cx={clampedX}

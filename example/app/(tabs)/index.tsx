@@ -314,6 +314,132 @@ export default function HomeScreen() {
             }}
           />
         </View>
+
+        <Text style={{ fontSize: 24, marginBottom: 8 }}>Area Fill - Solid Color</Text>
+        <View style={{ height: 200, marginBottom: 24 }}>
+          <LineChart
+            config={{
+              data: chartData,
+              colors: {
+                highlightColor: "#3E63DD",
+                areaFill: {
+                  type: "solid",
+                  color: "rgba(62, 99, 221, 0.2)",
+                },
+              },
+            }}
+          />
+        </View>
+
+        <Text style={{ fontSize: 24, marginBottom: 8 }}>Area Fill - Gradient</Text>
+        <View style={{ height: 200, marginBottom: 24 }}>
+          <LineChart
+            config={{
+              data: chartData,
+              colors: {
+                highlightColor: "#3E63DD",
+                areaFill: {
+                  type: "gradient",
+                  startColor: "rgba(62, 99, 221, 0.4)",
+                  endColor: "rgba(62, 99, 221, 0.05)",
+                },
+              },
+            }}
+          />
+        </View>
+
+        <Text style={{ fontSize: 24, marginBottom: 8 }}>
+          Area Fill - Progressive with Hover
+        </Text>
+        <View style={{ height: 200, marginBottom: 24 }}>
+          <LineChart
+            config={{
+              data: chartData,
+              hover: {
+                enabled: true,
+                showDot: true,
+                highlightLine: true,
+              },
+              colors: {
+                highlightColor: "#3E63DD",
+                lineBase: "#9EB1FF",
+                dotBase: "#0090FF",
+                areaFill: {
+                  type: "gradient",
+                  startColor: "rgba(62, 99, 221, 0.4)",
+                  endColor: "rgba(62, 99, 221, 0.05)",
+                },
+              },
+              xAxis: {
+                enabled: true,
+                isTimeData: true,
+                showGridLines: true,
+              },
+              yAxis: {
+                enabled: true,
+                showGridLines: true,
+              },
+            }}
+          />
+        </View>
+
+        <Text style={{ fontSize: 24, marginBottom: 8 }}>
+          Multiple Lines with Area Fills
+        </Text>
+        <View style={{ height: 200, marginBottom: 24 }}>
+          <LineChart
+            config={{
+              series: [
+                {
+                  id: "series1",
+                  label: "Revenue",
+                  data: chartData,
+                  colors: {
+                    highlightColor: "#3E63DD",
+                    lineBase: "#9EB1FF",
+                    dotBase: "#0090FF",
+                    areaFill: {
+                      type: "gradient",
+                      startColor: "rgba(62, 99, 221, 0.3)",
+                      endColor: "rgba(62, 99, 221, 0.05)",
+                    },
+                  },
+                },
+                {
+                  id: "series2",
+                  label: "Expenses",
+                  data: chartData.map((point) => ({
+                    x: point.x,
+                    y: point.y * 0.7 + 10,
+                  })),
+                  colors: {
+                    highlightColor: "#E5484D",
+                    lineBase: "#FFBDBD",
+                    dotBase: "#E5484D",
+                    areaFill: {
+                      type: "solid",
+                      color: "rgba(229, 72, 77, 0.15)",
+                    },
+                  },
+                },
+              ],
+              hover: {
+                enabled: true,
+                showDot: true,
+                highlightLine: true,
+              },
+              xAxis: {
+                enabled: true,
+                isTimeData: true,
+                showGridLines: true,
+              },
+              yAxis: {
+                enabled: true,
+                showGridLines: true,
+              },
+            }}
+          />
+        </View>
       </ScrollView>
     </GestureHandlerRootView>
   );

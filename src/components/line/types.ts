@@ -154,6 +154,49 @@ export type HoverConfig = {
 };
 
 /**
+ * Configuration for area fill gradient
+ */
+export type AreaFillGradient = {
+  /**
+   * Type of fill gradient
+   */
+  type: "gradient";
+  /**
+   * Start color for the gradient (top of chart)
+   * Supports rgba format for opacity
+   * @example "rgba(62, 99, 221, 0.3)"
+   */
+  startColor: string;
+  /**
+   * End color for the gradient (baseline)
+   * Supports rgba format for opacity
+   * @example "rgba(62, 99, 221, 0.05)"
+   */
+  endColor: string;
+};
+
+/**
+ * Configuration for solid area fill
+ */
+export type AreaFillSolid = {
+  /**
+   * Type of fill
+   */
+  type: "solid";
+  /**
+   * Color for the fill
+   * Supports rgba format for opacity
+   * @example "rgba(62, 99, 221, 0.2)"
+   */
+  color: string;
+};
+
+/**
+ * Area fill configuration
+ */
+export type AreaFillConfig = AreaFillGradient | AreaFillSolid;
+
+/**
  * Color configuration for chart elements.
  */
 export type LineChartColors = {
@@ -175,6 +218,11 @@ export type LineChartColors = {
    * @default "#000"
    */
   dotBase?: string;
+  /**
+   * Configuration for the area fill underneath the line.
+   * If not provided, no area fill is rendered.
+   */
+  areaFill?: AreaFillConfig;
 };
 
 /**

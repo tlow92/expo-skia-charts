@@ -1,4 +1,5 @@
-import type { SkPoint } from "@shopify/react-native-skia";
+import type { SkPath, SkPoint } from "@shopify/react-native-skia";
+import { Skia } from "@shopify/react-native-skia";
 import { curveLines } from "../../utils/math";
 import type { LineSeriesData } from "./types";
 
@@ -31,6 +32,58 @@ export const calculateUnifiedDomain = (
   return { minX, maxX, minY, maxY };
 };
 
+/**
+ * Builds a closed area path from line path by connecting to baseline.
+ * Creates a path that goes: line path -> down to baseline at last point ->
+ * along baseline to first point -> back up to start of line.
+ *
+ * @param linePath - The line path from curveLines()
+ * @param projectedPoints - Array of projected points used to build the line
+ * @returns Closed Skia Path ready for filling
+ */
+export const buildAreaPath = (linePath: SkPath, projectedPoints: SkPoint[]): SkPath => {
+  "worklet";
+
+  const areaPath = Skia.Path.Make();
+  const firstPoint = projectedPoints[0];
+
+  if (!firstPoint) {
+    return areaPath;
+  }
+
+  // Get the last actual data point (not the extra point added for line extension)
+  // The buildLine function adds an extra point at WIDTH + 10, so we need the second-to-last
+  const lastDataPointIndex = projectedPoints.length - 2;
+  const lastPoint =
+    lastDataPointIndex >= 0 ? projectedPoints[lastDataPointIndex] : firstPoint;
+
+  if (!lastPoint) {
+    return areaPath;
+  }
+
+  // The baseline should extend to include the PADDING area at the bottom
+  // In the transformed coordinate system (after scaleY: -1), y=0 is at the bottom
+  // but we want to extend into the PADDING area, so use -PADDING
+  const baselineY = -PADDING;
+
+  // Start at the first point (top of area)
+  areaPath.moveTo(firstPoint.x, firstPoint.y);
+
+  // Add the entire line path (follows the curve from first to last point)
+  areaPath.addPath(linePath);
+
+  // Draw line down to baseline at last point
+  areaPath.lineTo(lastPoint.x, baselineY);
+
+  // Draw line along baseline back to first point
+  areaPath.lineTo(firstPoint.x, baselineY);
+
+  // Close path (draws line back up to start point)
+  areaPath.close();
+
+  return areaPath;
+};
+
 export const buildLine = (points: SkPoint[], WIDTH: number, HEIGHT: number) => {
   // TODO: optimize
   const AJUSTED_SIZE = HEIGHT - PADDING * 2;
@@ -53,6 +106,7 @@ export const buildLine = (points: SkPoint[], WIDTH: number, HEIGHT: number) => {
     minY,
     maxY,
     path,
+    projectedPoints,
   };
 };
 
@@ -89,5 +143,6 @@ export const buildLineWithDomain = (
     minY,
     maxY,
     path,
+    projectedPoints,
   };
 };

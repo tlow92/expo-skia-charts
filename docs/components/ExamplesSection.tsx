@@ -323,6 +323,233 @@ export function ExamplesSection() {
 />`}
       />
 
+      <Text style={styles.h2}>Area Fill</Text>
+
+      <ChartExample
+        title="Solid Area Fill"
+        description="Add a solid color fill underneath the line to create an area chart effect."
+        config={{
+          data: chartData,
+          colors: {
+            highlightColor: "#3E63DD",
+            areaFill: {
+              type: "solid",
+              color: "rgba(62, 99, 221, 0.2)",
+            },
+          },
+        }}
+        height={250}
+        code={`<LineChart
+  config={{
+    data: chartData,
+    colors: {
+      highlightColor: "#3E63DD",
+      areaFill: {
+        type: "solid",
+        color: "rgba(62, 99, 221, 0.2)",
+      },
+    },
+  }}
+/>`}
+      />
+
+      <ChartExample
+        title="Gradient Area Fill"
+        description="Use a gradient fill that fades from top to bottom for a modern look."
+        config={{
+          data: chartData,
+          colors: {
+            highlightColor: "#3E63DD",
+            areaFill: {
+              type: "gradient",
+              startColor: "rgba(62, 99, 221, 0.4)",
+              endColor: "rgba(62, 99, 221, 0.05)",
+            },
+          },
+        }}
+        height={250}
+        code={`<LineChart
+  config={{
+    data: chartData,
+    colors: {
+      highlightColor: "#3E63DD",
+      areaFill: {
+        type: "gradient",
+        startColor: "rgba(62, 99, 221, 0.4)",
+        endColor: "rgba(62, 99, 221, 0.05)",
+      },
+    },
+  }}
+/>`}
+      />
+
+      <ChartExample
+        title="Progressive Area Fill with Hover"
+        description="Combine area fill with highlight interaction for a progressive reveal effect."
+        config={{
+          data: chartData,
+          hover: {
+            enabled: true,
+            showDot: true,
+            highlightLine: true,
+          },
+          colors: {
+            highlightColor: "#3E63DD",
+            lineBase: "#9EB1FF",
+            dotBase: "#0090FF",
+            areaFill: {
+              type: "gradient",
+              startColor: "rgba(62, 99, 221, 0.4)",
+              endColor: "rgba(62, 99, 221, 0.05)",
+            },
+          },
+          xAxis: {
+            enabled: true,
+            isTimeData: true,
+            showGridLines: true,
+          },
+          yAxis: {
+            enabled: true,
+            showGridLines: true,
+          },
+        }}
+        height={300}
+        code={`<LineChart
+  config={{
+    data: chartData,
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    colors: {
+      highlightColor: "#3E63DD",
+      lineBase: "#9EB1FF",
+      dotBase: "#0090FF",
+      areaFill: {
+        type: "gradient",
+        startColor: "rgba(62, 99, 221, 0.4)",
+        endColor: "rgba(62, 99, 221, 0.05)",
+      },
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    },
+  }}
+/>`}
+      />
+
+      <ChartExample
+        title="Multiple Lines with Area Fills"
+        description="Each line series can have its own area fill with different colors and types."
+        config={{
+          series: [
+            {
+              id: "series1",
+              label: "Revenue",
+              data: chartData,
+              colors: {
+                highlightColor: "#3E63DD",
+                lineBase: "#9EB1FF",
+                dotBase: "#0090FF",
+                areaFill: {
+                  type: "gradient",
+                  startColor: "rgba(62, 99, 221, 0.3)",
+                  endColor: "rgba(62, 99, 221, 0.05)",
+                },
+              },
+            },
+            {
+              id: "series2",
+              label: "Expenses",
+              data: chartData.map((point) => ({
+                x: point.x,
+                y: point.y * 0.7 + 10,
+              })),
+              colors: {
+                highlightColor: "#E5484D",
+                lineBase: "#FFBDBD",
+                dotBase: "#E5484D",
+                areaFill: {
+                  type: "solid",
+                  color: "rgba(229, 72, 77, 0.15)",
+                },
+              },
+            },
+          ],
+          hover: {
+            enabled: true,
+            showDot: true,
+            highlightLine: true,
+          },
+          xAxis: {
+            enabled: true,
+            isTimeData: true,
+            showGridLines: true,
+          },
+          yAxis: {
+            enabled: true,
+            showGridLines: true,
+          },
+        }}
+        height={300}
+        code={`<LineChart
+  config={{
+    series: [
+      {
+        id: "revenue",
+        label: "Revenue",
+        data: revenueData,
+        colors: {
+          highlightColor: "#3E63DD",
+          lineBase: "#9EB1FF",
+          dotBase: "#0090FF",
+          areaFill: {
+            type: "gradient",
+            startColor: "rgba(62, 99, 221, 0.3)",
+            endColor: "rgba(62, 99, 221, 0.05)",
+          },
+        },
+      },
+      {
+        id: "expenses",
+        label: "Expenses",
+        data: expensesData,
+        colors: {
+          highlightColor: "#E5484D",
+          lineBase: "#FFBDBD",
+          dotBase: "#E5484D",
+          areaFill: {
+            type: "solid",
+            color: "rgba(229, 72, 77, 0.15)",
+          },
+        },
+      },
+    ],
+    hover: {
+      enabled: true,
+      showDot: true,
+      highlightLine: true,
+    },
+    xAxis: {
+      enabled: true,
+      isTimeData: true,
+      showGridLines: true,
+    },
+    yAxis: {
+      enabled: true,
+      showGridLines: true,
+    },
+  }}
+/>`}
+      />
+
       <Text style={styles.h2}>Advanced Features</Text>
 
       <ChartExample
