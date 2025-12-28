@@ -5,6 +5,7 @@ Modern, performant, and highly customizable chart library for React Native built
 ## Demos
 
 https://tlow92.github.io/expo-skia-charts/getting-started
+<img src=".github/preview.gif" alt="chart preview" height="150" />
 
 ## Features
 
