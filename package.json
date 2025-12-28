@@ -1,7 +1,7 @@
 {
   "name": "expo-skia-charts",
   "version": "0.3.2",
-  "description": "Collection of modern performant charts for iOS/Android/Web using skia",
+  "description": "Collection of modern performant charts (Line, Bar, Donut) for iOS/Android/Web using Skia",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {

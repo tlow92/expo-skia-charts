@@ -1,6 +1,6 @@
 import { Link } from "expo-router";
 import type { ProcessedSegment } from "expo-skia-charts";
-import { DonutChart, LineChart } from "expo-skia-charts";
+import { BarChart, DonutChart, LineChart } from "expo-skia-charts";
 import { useMemo } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Animated, { Easing, FadeInDown, FadeOutUp } from "react-native-reanimated";
@@ -23,6 +23,42 @@ export default function ExamplesIndexScreen() {
       { label: "Q1", value: 30 },
       { label: "Q2", value: 45 },
       { label: "Q3", value: 25 },
+    ],
+    []
+  );
+
+  const barSeriesData = useMemo(
+    () => [
+      {
+        id: "revenue",
+        data: [
+          { label: "Q1", value: 120 },
+          { label: "Q2", value: 150 },
+          { label: "Q3", value: 180 },
+          { label: "Q4", value: 200 },
+        ],
+        color: "#3B82F6",
+      },
+      {
+        id: "expenses",
+        data: [
+          { label: "Q1", value: 80 },
+          { label: "Q2", value: 95 },
+          { label: "Q3", value: 110 },
+          { label: "Q4", value: 125 },
+        ],
+        color: "#EF4444",
+      },
+      {
+        id: "profit",
+        data: [
+          { label: "Q1", value: 40 },
+          { label: "Q2", value: 55 },
+          { label: "Q3", value: 70 },
+          { label: "Q4", value: 75 },
+        ],
+        color: "#10B981",
+      },
     ],
     []
   );
@@ -99,6 +135,44 @@ export default function ExamplesIndexScreen() {
                   yAxis: {
                     enabled: true,
                     showGridLines: true,
+                  },
+                }}
+              />
+            </View>
+
+            <Text style={styles.cardLink}>View All Examples →</Text>
+          </TouchableOpacity>
+        </Link>
+
+        {/* @ts-ignore - asChild prop is valid but type definitions are incomplete */}
+        <Link href="/examples/bar-chart" asChild>
+          <TouchableOpacity style={styles.card}>
+            <Text style={styles.cardTitle}>BarChart Examples</Text>
+            <Text style={styles.cardDescription}>
+              Vertical and horizontal bar charts with support for single, grouped, and
+              stacked modes. Includes hover effects, tooltips, and custom styling.
+            </Text>
+
+            <View style={styles.exampleChart}>
+              <BarChart
+                config={{
+                  series: barSeriesData,
+                  mode: "grouped",
+                  orientation: "vertical",
+                  style: {
+                    cornerRadius: 4,
+                    gap: 4,
+                  },
+                  xAxis: {
+                    enabled: true,
+                  },
+                  yAxis: {
+                    enabled: true,
+                    showGridLines: true,
+                  },
+                  hover: {
+                    enabled: true,
+                    highlightBar: true,
                   },
                 }}
               />

@@ -26,6 +26,7 @@ const navItems: NavItem[] = [
     href: "/examples",
     subItems: [
       { title: "LineChart", href: "/examples/line-chart" },
+      { title: "BarChart", href: "/examples/bar-chart" },
       { title: "DonutChart", href: "/examples/donut-chart" },
     ],
   },

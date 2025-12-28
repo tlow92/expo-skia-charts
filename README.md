@@ -24,6 +24,7 @@
 ## Available Charts
 
 - **LineChart**: Single and multi-line charts with smooth curves, axes, grid lines, and interactive tooltips
+- **BarChart**: Vertical and horizontal bar charts with grouped/stacked modes, hover effects, rounded corners, and custom tooltips
 - **DonutChart**: Donut and pie charts with hover effects, legends, custom center values, and segment gaps
 
 ## Requirements
@@ -85,6 +86,56 @@ function MyChart() {
           xAxis: { enabled: true },
           yAxis: { enabled: true, showGridLines: true },
           hover: { enabled: true, showDot: true },
+        }}
+      />
+    </View>
+  );
+}
+```
+
+### BarChart
+
+```tsx
+import { BarChart } from "expo-skia-charts";
+
+function MyChart() {
+  const data = [
+    { label: "Jan", value: 65 },
+    { label: "Feb", value: 59 },
+    { label: "Mar", value: 80 },
+    { label: "Apr", value: 81 },
+    { label: "May", value: 56 },
+    { label: "Jun", value: 55 },
+  ];
+
+  return (
+    <View style={{ height: 300 }}>
+      <BarChart
+        config={{
+          data: data,
+          orientation: "vertical",
+          style: { cornerRadius: 8 },
+          yAxis: { enabled: true, showGridLines: true },
+          xAxis: { enabled: true },
+          hover: {
+            enabled: true,
+            tooltip: {
+              renderContent: (dataPoint) => (
+                <View
+                  style={{
+                    backgroundColor: "white",
+                    padding: 8,
+                    borderRadius: 6,
+                    borderWidth: 1,
+                    borderColor: "#e0e0e0",
+                  }}
+                >
+                  <Text>{dataPoint.label}</Text>
+                  <Text style={{ fontWeight: "bold" }}>{dataPoint.value}</Text>
+                </View>
+              ),
+            },
+          },
         }}
       />
     </View>

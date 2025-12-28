@@ -172,6 +172,34 @@ src/
     Roboto-Regular.ttf     # Fonts for text rendering
 ```
 
+## Available Chart Types
+
+### LineChart
+- Single and multi-line charts with smooth curves
+- Hover interactions with tooltips
+- Numeric X and Y axes with grid lines
+- Location: `src/components/line/`
+
+### BarChart
+- Vertical and horizontal bar charts
+- Three modes: single series, grouped (side-by-side), and stacked
+- Categorical axis (bar labels) + numeric axis (values)
+- Hover interactions with tooltips
+- Custom styling: rounded corners, custom colors, minimum bar size
+- Animations: bars grow from baseline
+- Location: `src/components/bar/`
+- Key differences from LineChart:
+  - Uses `RoundedRect` Skia primitive instead of `Path`
+  - Categorical axis component (`CategoricalAxis.tsx`) for labels
+  - Hit detection based on bar bounds (rectangles) vs line curves
+  - Three layout calculation functions: single, grouped, stacked
+
+### DonutChart
+- Donut and pie charts with segment gaps
+- Hover interactions with animations
+- Center values and legend support
+- Location: `src/components/donut/`
+
 ## Chart Component Development Patterns
 
 ### 1. Standard Chart Structure

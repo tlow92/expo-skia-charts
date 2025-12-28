@@ -21,7 +21,8 @@
       "Bash(ls:*)",
       "Bash(yarn biome:*)",
       "Bash(npx @biomejs/biome check .)",
-      "Bash(yarn prepare)"
+      "Bash(yarn prepare)",
+      "mcp__context7__get-library-docs"
     ]
   },
   "enabledMcpjsonServers": [

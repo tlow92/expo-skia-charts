@@ -14,6 +14,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="bar"
+        options={{
+          title: "Bar",
+        }}
+      />
+      <Tabs.Screen
         name="donut"
         options={{
           title: "Donut",

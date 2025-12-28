@@ -1,3 +1,15 @@
+export { BarChart } from "./components/bar";
+export type {
+  BarChartConfig,
+  BarChartDataPoint,
+  BarChartMode,
+  BarChartOrientation,
+  BarChartProps,
+  BarHoverConfig,
+  BarSeriesData,
+  BarStyleConfig,
+  BarTooltipConfig,
+} from "./components/bar/types";
 export { DonutChart } from "./components/donut";
 export type {
   CenterValuesConfig,
@@ -9,7 +21,6 @@ export type {
   ProcessedSegment,
 } from "./components/donut/types";
 export { LineChart } from "./components/line/LineChart";
-// Export types for TypeScript consumers
 export type {
   AxisConfig,
   HoverConfig,

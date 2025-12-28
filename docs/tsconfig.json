@@ -1,6 +1,9 @@
 {
   "extends": "../tsconfig",
   "compilerOptions": {
+    "paths": {
+      "expo-skia-charts": ["../src"]
+    },
     "typeRoots": ["./global.d.ts"]
   },
   "include": [
@@ -9,5 +12,6 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "global.d.ts"
-  ]
+  ],
+  "exclude": ["../lib", "node_modules"]
 }
