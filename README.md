@@ -8,7 +8,7 @@
   </p>
 </div>
 
-<img src=".github/preview.gif" alt="chart preview" height="300" />
+<img src="https://raw.githubusercontent.com/tlow92/expo-skia-charts/refs/heads/main/preview-small.gif" alt="chart preview" width="1000" />
 
 ## Features
 
