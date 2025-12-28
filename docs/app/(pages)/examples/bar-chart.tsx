@@ -530,8 +530,8 @@ export default function BarChartExamplesScreen() {
       <Text style={styles.h2}>Advanced Features</Text>
 
       <BarChartExample
-        title="Tooltip Position: Touch"
-        description="Position tooltip near the touch or cursor coordinates for better mobile experience."
+        title="Tooltip Position: Touch + Custom Tooltip"
+        description="Position tooltip near the touch coordinate."
         config={{
           series: stackedSeries,
           mode: "stacked",
