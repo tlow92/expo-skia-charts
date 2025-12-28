@@ -122,9 +122,14 @@ function MyChart() {
 
 ## Contributing
 
-- [Development workflow](CONTRIBUTING.md#development-workflow)
-- [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
-- [Code of conduct](CODE_OF_CONDUCT.md)
+- I appreciate any contirbution, feel free to open a PR. I will gladly merge it.
+
+## Roadmap
+
+- [ ] Barchart
+- [ ] Dynamic tick counts depending on size
+- [ ] Area chart option for linechart
+- [ ] Peak-labels (only display label on peaks and troughs)
 
 ## License
 
