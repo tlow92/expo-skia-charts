@@ -9,6 +9,9 @@ export function App() {
   return <ExpoRoot context={ctx} />;
 }
 
-LoadSkiaWeb({ locateFile: () => "/canvaskit.wasm" }).then(async () => {
+LoadSkiaWeb({
+  locateFile: () =>
+    `${process.env.NODE_ENV === "development" ? "" : "/expo-skia-charts"}/canvaskit.wasm`,
+}).then(async () => {
   registerRootComponent(App);
 });

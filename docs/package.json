@@ -9,8 +9,7 @@
     "web": "expo start --web",
     "web:export": "expo export -p web",
     "web:serve": "npx serve dist",
-    "deploy": "gh-pages --nojekyll -d dist",
-    "predeploy": "expo export -p web"
+    "deploy": "expo export -p web"
   },
   "dependencies": {
     "@bacons/mdx": "^0.4.5",
@@ -45,9 +44,7 @@
     "react-syntax-highlighter": "^16.1.0"
   },
   "devDependencies": {
-    "@types/gh-pages": "^6",
     "@types/react-syntax-highlighter": "^15.5.13",
-    "gh-pages": "^6.3.0",
     "react-native-builder-bob": "^0.40.17",
     "react-native-monorepo-config": "^0.3.1"
   },

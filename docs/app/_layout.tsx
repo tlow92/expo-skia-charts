@@ -10,8 +10,6 @@ import { Navigation } from "../components/Navigation";
 import { Table } from "../components/Table";
 
 export default function RootLayout() {
-  const isDesktop = Platform.OS === "web" && Dimensions.get("window").width > 768;
-
   const mdxStyles = {
     h1: {
       fontSize: 32,
@@ -125,7 +123,7 @@ export default function RootLayout() {
           }}
         >
           <View style={styles.container}>
-            {isDesktop && <Navigation />}
+            <Navigation />
 
             <Stack
               screenOptions={{
