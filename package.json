@@ -133,6 +133,12 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!(@shopify/react-native-skia|@react-native|react-native|react-native-reanimated|react-native-gesture-handler)/)"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/test-setup.ts"
     ]
   },
   "release-it": {

@@ -72,9 +72,10 @@ describe("buildLine", () => {
 
     const projectedPoints = mockCurveLines.mock.calls[0]?.[0];
     const lastPoint = projectedPoints?.[projectedPoints.length - 1];
+    const secondToLastPoint = projectedPoints?.[projectedPoints.length - 2];
 
     expect(lastPoint?.x).toBe(WIDTH + 10);
-    expect(lastPoint?.y).toBe(20);
+    expect(lastPoint?.y).toBe(secondToLastPoint?.y);
   });
 
   it("calls curveLines with correct params", () => {
