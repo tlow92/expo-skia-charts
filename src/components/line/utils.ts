@@ -84,7 +84,12 @@ export const buildAreaPath = (linePath: SkPath, projectedPoints: SkPoint[]): SkP
   return areaPath;
 };
 
-export const buildLine = (points: SkPoint[], WIDTH: number, HEIGHT: number) => {
+export const buildLine = (
+  points: SkPoint[],
+  WIDTH: number,
+  HEIGHT: number,
+  smoothing: number = 0.1
+) => {
   // TODO: optimize
   const AJUSTED_SIZE = HEIGHT - PADDING * 2;
   const xPoints = points.map((_) => _.x);
@@ -102,7 +107,7 @@ export const buildLine = (points: SkPoint[], WIDTH: number, HEIGHT: number) => {
   const lastProjectedPoint = projectedPoints.at(-1);
   if (lastProjectedPoint?.y !== undefined)
     projectedPoints.push({ x: WIDTH + 10, y: lastProjectedPoint.y });
-  const path = curveLines(projectedPoints, 0.1, "complex");
+  const path = curveLines(projectedPoints, smoothing, "complex");
   return {
     minY,
     maxY,
@@ -124,7 +129,8 @@ export const buildLineWithDomain = (
   points: SkPoint[],
   WIDTH: number,
   HEIGHT: number,
-  domain: { minX: number; maxX: number; minY: number; maxY: number }
+  domain: { minX: number; maxX: number; minY: number; maxY: number },
+  smoothing: number = 0.1
 ) => {
   const AJUSTED_SIZE = HEIGHT - PADDING * 2;
   const { minX, maxX, minY, maxY } = domain;
@@ -139,7 +145,7 @@ export const buildLineWithDomain = (
   if (lastProjectedPoint?.y !== undefined)
     projectedPoints.push({ x: WIDTH + 10, y: lastProjectedPoint.y });
 
-  const path = curveLines(projectedPoints, 0.1, "complex");
+  const path = curveLines(projectedPoints, smoothing, "complex");
 
   return {
     minY,

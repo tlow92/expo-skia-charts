@@ -324,6 +324,15 @@ export type LineChartConfig = {
    * @default 1000
    */
   animationDuration?: number;
+  /**
+   * Smoothing factor for the line curve.
+   * Values between 0 and 1 control curve tension.
+   * - 0: No smoothing (straight lines between points)
+   * - 0.1-0.3: Gentle curves (recommended)
+   * - Higher values: More pronounced curves
+   * @default 0.1
+   */
+  smoothing?: number;
 };
 
 /**

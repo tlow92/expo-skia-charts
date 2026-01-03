@@ -29,7 +29,7 @@ export function Line({
   const {
     size: { width, height },
     x,
-    config: { hover, colors: defaultColors, data: contextData },
+    config: { hover, colors: defaultColors, data: contextData, smoothing = 0.1 },
     animationProgress,
   } = useLineChartContext();
 
@@ -43,9 +43,9 @@ export function Line({
 
     let result;
     if (domain) {
-      result = buildLineWithDomain(data, width, height, domain);
+      result = buildLineWithDomain(data, width, height, domain, smoothing);
     } else {
-      result = buildLine(data, width, height);
+      result = buildLine(data, width, height, smoothing);
     }
 
     // Build area path if fill is configured
@@ -55,7 +55,7 @@ export function Line({
     }
 
     return { ...result, areaPath };
-  }, [data, width, height, domain, colors?.areaFill]);
+  }, [data, width, height, domain, colors?.areaFill, smoothing]);
 
   const DOT_SIZE = hover?.dotSize ?? 6;
 
