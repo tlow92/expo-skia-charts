@@ -99,8 +99,9 @@ export const buildLine = (points: SkPoint[], WIDTH: number, HEIGHT: number) => {
     const projectedY = ((y - minY) / (maxY - minY)) * AJUSTED_SIZE;
     return { x: projectedX, y: projectedY };
   });
-  const lastPoint = points.at(-1);
-  if (lastPoint?.y !== undefined) projectedPoints.push({ x: WIDTH + 10, y: lastPoint.y });
+  const lastProjectedPoint = projectedPoints.at(-1);
+  if (lastProjectedPoint?.y !== undefined)
+    projectedPoints.push({ x: WIDTH + 10, y: lastProjectedPoint.y });
   const path = curveLines(projectedPoints, 0.1, "complex");
   return {
     minY,
@@ -134,8 +135,9 @@ export const buildLineWithDomain = (
     return { x: projectedX, y: projectedY };
   });
 
-  const lastPoint = points.at(-1);
-  if (lastPoint?.y !== undefined) projectedPoints.push({ x: WIDTH + 10, y: lastPoint.y });
+  const lastProjectedPoint = projectedPoints.at(-1);
+  if (lastProjectedPoint?.y !== undefined)
+    projectedPoints.push({ x: WIDTH + 10, y: lastProjectedPoint.y });
 
   const path = curveLines(projectedPoints, 0.1, "complex");
 
