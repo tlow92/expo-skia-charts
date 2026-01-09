@@ -4,9 +4,9 @@
   <p align="center">
     Modern, performant, and highly customizable chart library for React Native built with Skia. Supports iOS, Android, and Web with smooth animations and interactive features.
     <br />
-    <a href="https://github.com/tlow92/expo-key-event?tab=readme-ov-file#getting-started">📖 Documentation + Demos</a>
+    <a href="https://tlow92.github.io/expo-skia-charts/examples">📖 Documentation + Demos</a>
     &middot;
-    <a href="https://github.com/tlow92/expo-key-event?tab=readme-ov-file#getting-started](https://github.com/tlow92/expo-skia-charts/discussions/categories/polls">💡 Vote on the Roadmap!</a>
+    <a href="https://github.com/tlow92/expo-skia-charts/discussions/3">💡 Vote on the Roadmap!</a>
   </p>
 </div>
 
