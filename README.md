@@ -6,7 +6,7 @@
     <br />
     <a href="https://tlow92.github.io/expo-skia-charts/examples">📖 Documentation + Demos</a>
     &middot;
-    <a href="https://github.com/tlow92/expo-skia-charts/discussions/3">💡 Vote on the Roadmap!</a>
+    <a href="https://github.com/tlow92/expo-skia-charts/discussions">💡 Vote on the Roadmap!</a>
   </p>
 </div>
 
