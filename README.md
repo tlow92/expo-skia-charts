@@ -175,7 +175,7 @@ function MyChart() {
 
 ## Contributing
 
-- I appreciate any contirbution, feel free to open a PR. I will gladly merge it.
+- I appreciate any contribution, feel free to open a PR. I will gladly merge it.
 
 ## License
 
